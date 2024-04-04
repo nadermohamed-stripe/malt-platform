@@ -12,8 +12,14 @@ export async function POST(request) {
       amount: 1000,
       currency: "usd",
       description:"invoice id ABCDEF125",
-      metadata:{'maltID':'#ABCDEF125',
-      'incomingTransferId':'ccsbtxn_1OzGu6GPyjqeiImvxuSzlLMH','incomingReference':'#1231'
+      metadata:{
+        'payment_type':'payment',
+        'project_id':'#p117',
+        'invoice_id':'#i117',
+        'funds_origin':'factoring',
+        'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+        'funds_destination': 'freelancer',
+        'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
       },
     });
 

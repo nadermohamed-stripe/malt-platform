@@ -17,3 +17,4 @@ export async function GET(request) {
     return NextResponse.json({ error: "An error occurred while fetching the customer balance." }, { status: 500 });
   }
 }
+

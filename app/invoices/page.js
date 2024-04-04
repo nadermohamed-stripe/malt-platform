@@ -119,6 +119,20 @@ function classNames(...classes) {
 
 export default function Invoices() {
  const [filteredStatus, setFilteredStatus] = useState(null);
+ const [accountBalance, setAccountBalance] = useState(null);
+
+ useEffect(() => {
+  const fetchAccountBalance = async () => {
+    try {
+      const response = await fetch('/api/get-amounts');
+      const data = await response.json();
+      setAccountBalance(data.amount);
+    } catch (error) {
+      console.error('Error fetching account balance:', error);
+    }
+  };
+  fetchAccountBalance();
+}, []);
 
  const setFilter = (status) => {
    setFilteredStatus(status);
@@ -418,7 +432,7 @@ export default function Invoices() {
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            L&apos;Oreal
+                            L&apos;Oreal {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

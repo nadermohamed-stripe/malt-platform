@@ -465,7 +465,7 @@ export default function Factoring() {
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            Factoring
+                            Factoring {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

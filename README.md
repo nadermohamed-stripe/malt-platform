@@ -22,10 +22,10 @@ If you want to see the app in production: https://malt-platform.vercel.app/
 
 
 [] Add Money dialog to be fixed
-[] Box VBAN + Balance
+[x] Box VBAN + Balance
 [] Status Processing
 [] Page with My balance + My Balance history + My payments
-[] Onboarding
+[!] Onboarding
 [] Terminal to show API Responses for devs
 
 WE NEED A STORY!!!! A PROJECT, A COMPELLING EVENT FOR FREELANCER AND CUSTOMER!!!

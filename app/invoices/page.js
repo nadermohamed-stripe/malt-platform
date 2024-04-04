@@ -24,6 +24,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
+import Dialogg from '../(components)/Dialogg'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -92,6 +93,16 @@ const days = [
         description: 'Website redesign',
         icon: ArrowUpCircleIcon,
       },
+      {
+        id: 5,
+        invoiceNumber: '00011',
+        href: '#',
+        amount: '$10,000.00 USD',
+        status: 'Withdraw',
+        client: 'Tom Cook',
+        description: 'Salary',
+        icon: ArrowDownCircleIcon,
+      },
     ],
   },
 ]
@@ -106,18 +117,53 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Loreal() {
+export default function Invoices() {
  const [filteredStatus, setFilteredStatus] = useState(null);
 
  const setFilter = (status) => {
    setFilteredStatus(status);
  }
 
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false); // Added line
 
+  // Removed lines about setIsSendingMoney, setIsMoneySent etc...
 
   return (
     <>
+      <style>
+        {`
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .spinner-container {
+            position: relative;
+            height: 300px; /* Same height as spinner for alignment */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .spinner {
+            position: absolute;
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #000;
+            border-right-color: #000;
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            animation: spin 0.5s ease-in-out infinite;
+          }
+          .checkmark {
+            position: absolute;
+            animation: fadeIn 1s; /* Simple fade-in animation for the checkmark */
+          }
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+        `}
+      </style>
       <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 lg:hidden" onClose={setSidebarOpen}>
@@ -414,6 +460,7 @@ export default function Loreal() {
                     <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-rose-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                      onClick={() => setDialogOpen(true)} 
                     >
                       Send money
                     </button>
@@ -519,6 +566,8 @@ export default function Loreal() {
         </main>
       </div>
     </div>
+{/* Dialog for confirming send money action */}
+<Dialogg isOpen={dialogOpen} setIsOpen={setDialogOpen} /> 
   </>
-)
+);
 }

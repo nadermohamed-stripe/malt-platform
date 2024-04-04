@@ -20,16 +20,12 @@ If you want to see the app in production: https://malt-platform.vercel.app/
 
 ## What is missing:
 
-[] Add remaining balance in all pages
-[x] Add Factoring flow 
+
 [] Add Money dialog to be fixed
+[] Box VBAN + Balance
+[] Status Processing
 [] Page with My balance + My Balance history + My payments
-[] Project Transfer dialog + color automation
-[] Connect /invoices to Stripe to show the pi
-[] Send Money dialog to bulk pay all frelancers in /invoices
+[] Onboarding
 [] Terminal to show API Responses for devs
 
-
-project name
-freelancer name
-Pay for project button
+WE NEED A STORY!!!! A PROJECT, A COMPELLING EVENT FOR FREELANCER AND CUSTOMER!!!

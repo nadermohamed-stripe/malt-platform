@@ -398,7 +398,7 @@ export default function Loreal() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                               aria-hidden="true"
                             />
-                            Duke street studio
+                            41 Rue Martre, 92117 Clichy, France
                           </dd>
                           <dt className="sr-only">Account status</dt>
                           <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">

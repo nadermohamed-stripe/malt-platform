@@ -382,7 +382,7 @@ export default function Deloitte() {
                         <div className="flex items-center">
                           <img
                             className="h-16 w-16 rounded-full sm:hidden"
-                            src="./deloitte.png"
+                            src="./loreal"
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
@@ -396,7 +396,7 @@ export default function Deloitte() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                               aria-hidden="true"
                             />
-                            Duke street studio
+                            Kurfürstendamm 23 10719 Berlin
                           </dd>
                           <dt className="sr-only">Account status</dt>
                           <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
@@ -405,6 +405,14 @@ export default function Deloitte() {
                               aria-hidden="true"
                             />
                             Verified account
+                          </dd>
+                          <dt className="sr-only">Account status</dt>
+                          <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
+                            <CheckCircleIcon
+                              className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+                              aria-hidden="true"
+                            />
+                            VBAN: IT1234567890123456789012345
                           </dd>
                         </dl>
                       </div>

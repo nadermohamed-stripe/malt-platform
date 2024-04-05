@@ -24,7 +24,6 @@ If you want to see the app in production: https://malt-platform.vercel.app/
 [] Add Money dialog to be fixed
 [] Undestand whats the problem for the onboarding
 [] Finish the sign up journey
-[] Copy status processing logic from /project to other components
 [] Terminal to show API Responses for devs
 
 

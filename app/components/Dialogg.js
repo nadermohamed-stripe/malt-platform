@@ -35,7 +35,7 @@ export default function Dialogg({isOpen, setIsOpen}) {
     setIsSuccess(false);
 
     try {
-      const response = await fetch('/api/customer-payment-transfer', { method: 'POST' });
+      const response = await fetch('/api/cpt1', { method: 'POST' });
       const data = await response.json();
       if (response.ok && data.Transfer) {
         setTimeout(() => {

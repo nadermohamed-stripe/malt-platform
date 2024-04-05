@@ -1,6 +1,7 @@
 "use client"
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import Dialoggg from '@/app/components/Dialoggg'
 import {
   Bars3CenterLeftIcon,
   BellIcon,
@@ -23,6 +24,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
+
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -89,33 +91,17 @@ const statusStyles = {
   failed: 'bg-gray-100 text-gray-800',
 }
 
-const projects = [
-    {
-      name: 'Web Design Project',
-      amount: '$5,000',
-      customer: 'Acme Inc.',
-      freelancers: [
-        { name: 'John Doe', amount: '$3,000' },
-        { name: 'Jane Smith', amount: '$2,000' }
-      ],
-      description: 'Design a modern and responsive website for Acme Inc.',
-      timeline: 'April 1, 2023 - May 15, 2023',
-      status: 'In Progress',
-    },
-    /* ...other projects... */
-  ]
-  
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
-export default function Factoring() {
+export default function Sauce() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [accountBalance, setAccountBalance] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
+  const [transactions, setTransactions] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedPaymentIntent, setSelectedPaymentIntent] = useState(null);
+  const [apiResponse, setApiResponse] = useState(null);
 
   useEffect(() => {
     const fetchAccountBalance = async () => {
@@ -123,75 +109,36 @@ export default function Factoring() {
         const response = await fetch('/api/get-amounts');
         const data = await response.json();
         setAccountBalance(data.amount);
+  
+        // Call fetchTransactions after accountBalance is set
+        fetchTransactions();
       } catch (error) {
         console.error('Error fetching account balance:', error);
       }
     };
+  
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch('/api/get-info1', {
+          method: 'POST',
+        });
+        const data = await response.json();
+        setTransactions(data.transactions);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
+  
     fetchAccountBalance();
   }, []);
 
-  const handleAcceptClick = async () => {
-    setIsLoading(true);
-    setIsSuccess(false); // Ensure success is not shown initially
-    try {
-      const response = await fetch('/api/factoring-payment-transfer', { method: 'POST' });
-      const data = await response.json();
-      if (response.ok && data.Transfer) {
-        setTimeout(() => {
-          setIsLoading(false); // Stop the spinner
-          setIsSuccess(true); // Show success checkmark
-          
-          setTimeout(() => {
-            setIsSuccess(false); // Reset success for next time
-            setSelectedProject(null); // Close the dialog
-          }, 2000); // Show success for 2 seconds then close dialog
-        }, 2000); // Assume showing spinner for 2 seconds for demo
-      } else {
-        setIsLoading(false);
-        console.error('Transfer failed:', data.error);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error('Error processing transfer:', error);
-    }
+  const getPaymentIntentByTransactionId = (transactionId) => {
+    const transaction = transactions.find((t) => t.id === transactionId);
+    return transaction ? transaction.paymentIntent : null;
   };
-  
 
   return (
     <>
-<style>
-  {`
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .spinner-container {
-      position: relative;
-      height: 300px; /* Same height as spinner for alignment */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .spinner {
-      position: absolute;
-      border: 8px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #000;
-      border-right-color: #000;
-      border-radius: 50%;
-      width: 64px;
-      height: 64px;
-      animation: spin 0.5s ease-in-out infinite;
-    }
-    .checkmark {
-      position: absolute;
-      animation: fadeIn 1s; /* Simple fade-in animation for the checkmark */
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  `}
-</style>
       <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 lg:hidden" onClose={setSidebarOpen}>
@@ -386,11 +333,11 @@ export default function Factoring() {
                       <span className="absolute -inset-1.5 lg:hidden" />
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="./factoring.jpg"
+                        src="./deloitte.png"
                         alt=""
                       />
                       <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
-                        <span className="sr-only">Open user menu for </span>Factoring
+                        <span className="sr-only">Open user menu for </span>Deloitte
                       </span>
                       <ChevronDownIcon
                         className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
@@ -454,18 +401,18 @@ export default function Factoring() {
                     <div className="flex items-center">
                       <img
                         className="hidden h-16 w-16 rounded-full sm:block"
-                        src="./factoring.jpg"
+                        src="./deloitte.png"
                         alt=""
                       />
                       <div>
                         <div className="flex items-center">
                           <img
                             className="h-16 w-16 rounded-full sm:hidden"
-                            src="./factoring.jpg"
+                            src="./loreal"
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            Factoring {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
+                            Deloitte {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -515,132 +462,172 @@ export default function Factoring() {
               </div>
             </div>
 
-                {/* Project grid */}
-            <div className="mt-8 px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
-              <h2 className="text-lg leading-6 font-medium text-gray-900">Projects</h2>
-              <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {/* Project cards */}
-                {projects.map((project) => (
-                  <div
-                    key={project.name}
-                    className="bg-white overflow-hidden shadow rounded-lg cursor-pointer divide-y divide-gray-200 hover:shadow-lg transition-shadow"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    <div className="p-5">
-                      <h3 className="text-lg font-medium text-gray-900">{project.name}</h3>
-                      <p className="mt-1 text-sm text-gray-500">Customer: {project.customer}</p>
-                      <p className="mt-1 text-sm text-gray-500">Amount: {project.amount}</p>
-                      <div className="mt-4">
-                        <h4 className="text-sm font-medium text-gray-900">Freelancers:</h4>
-                        <ul className="mt-2">
-                          {project.freelancers.map(freelancer => (
-                            <li key={freelancer.name} className="text-sm text-gray-500">{freelancer.name} - {freelancer.amount}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
+            <div className="mt-8">
+
+
+
+              <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
+                Recent activity
+              </h2>
+
+              {/* Activity list (smallest breakpoint only) */}
+              <div className="shadow sm:hidden">
+                <ul role="list" className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+                  {transactions.map((transaction) => (
+                    <li key={transaction.id}>
+                      <a href={transaction.href} className="block bg-white px-4 py-4 hover:bg-gray-50">
+                        <span className="flex items-center space-x-4">
+                          <span className="flex flex-1 space-x-2 truncate">
+                            <BanknotesIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                            <span className="flex flex-col truncate text-sm text-gray-500">
+                              <span className="truncate">{transaction.name}</span>
+                              <span>
+                                <span className="font-medium text-gray-900">{transaction.amount}</span>{' '}
+                                {transaction.currency}
+                              </span>
+                              <time dateTime={transaction.datetime}>{transaction.date}</time>
+                            </span>
+                          </span>
+                          <ChevronRightIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <nav
+                  className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3"
+                  aria-label="Pagination"
+                >
+                  <div className="flex flex-1 justify-between">
+                    <a
+                      href="#"
+                      className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Previous
+                    </a>
+                    <a
+                      href="#"
+                      className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Next
+                    </a>
                   </div>
-                ))}
-</div>
-            </div>
+                </nav>
+              </div>
 
-            {selectedProject && (
-              <Transition.Root show={true} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => setSelectedProject(null)}>
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                  </Transition.Child>
-
-                  <div className="fixed inset-0 z-10 overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                      <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enterTo="opacity-100 translate-y-0 sm:scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                        leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                      >
-                        <Dialog.Panel className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                          <div>
-                            <div className="mt-3 text-center sm:mt-5">
-{/* Conditional render inside Dialog.Panel based on isLoading and isSuccess */}
-<>
-{isLoading ? (
-    <div className="spinner-container">
-      <div className="spinner" />
-    </div>
-  ) : isSuccess ? (
-    <div className="flex flex-col items-center justify-center">
-      <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" />
-      <p className="text-lg">Success</p>
-    </div>
-  ) : (
-    <>
-      <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-        {selectedProject.name}
-      </Dialog.Title>
-      <div className="mt-2">
-        <p className="text-sm text-gray-500">{selectedProject.description}</p>
-        <p className="mt-4 text-sm text-gray-600">Customer: {selectedProject.customer}</p>
-        <p className="mt-2 text-sm text-gray-600">Amount: {selectedProject.amount}</p>
-        <p className="mt-2 text-sm text-gray-600">Timeline: {selectedProject.timeline}</p>
-        <div className="mt-4">
-          <h4 className="text-sm font-medium text-gray-900">Freelancers Payments:</h4>
-          <ul className="mt-2">
-            {selectedProject.freelancers.map(freelancer => (
-              <li key={freelancer.name} className="text-sm text-gray-500">{freelancer.name} - {freelancer.amount}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-5">
-          <img src="https://via.placeholder.com/400x200?text=Gantt+Chart+Placeholder" alt="Gantt Chart" className="mx-auto" />
-          <p className="mt-2 text-xs text-gray-400">* This is a placeholder image representing a Gantt chart.</p>
-        </div>
-      </div>
-    </>
-  )}
-</>
-</div>
-</div>
-
-                            
-                          
-                          <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                          <button
-  type="button"
-  className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:col-start-2 sm:text-sm"
-  onClick={handleAcceptClick} // Updated
->
-  Accept
-</button>
-                            <button
-                              type="button"
-                              className="mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-                              onClick={() => setSelectedProject(null)}
+              {/* Activity table (small breakpoint and up) */}
+              <div className="hidden sm:block">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                  <div className="mt-2 flex flex-col">
+                    <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
+                    {console.log('Transactions:', transactions)}
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead>
+                          <tr>
+                            <th
+                              className="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                              scope="col"
                             >
-                              Deny
-                            </button>
-                          </div>
-                        </Dialog.Panel>
-                      </Transition.Child>
+                              Transaction
+                            </th>
+                            <th
+                              className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                              scope="col"
+                            >
+                              Amount
+                            </th>
+                            <th
+                              className="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block"
+                              scope="col"
+                            >
+                              Status
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+  {transactions.map((transaction) => (
+    <tr key={transaction.id} className="bg-white">
+      <td className="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+        <div className="flex">
+        <a
+  href="#"
+  className="group inline-flex space-x-2 truncate text-sm"
+  onClick={(e) => {
+    e.preventDefault();
+    const paymentIntent = getPaymentIntentByTransactionId(transaction.id);
+    console.log("Payment Intent:", paymentIntent);
+    setShowDialog(true);
+    setSelectedPaymentIntent(paymentIntent);
+  }}
+>
+            <BanknotesIcon
+              className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+              aria-hidden="true"
+            />
+            <p className="truncate text-gray-500 group-hover:text-gray-900">
+              {transaction.id}
+            </p>
+          </a>
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+        <span className="font-medium text-gray-900">{transaction.amount / 100}</span> EUR
+      </td>
+      <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
+        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize">
+          {transaction.paymentIntent ? 'Applied to payment' : 'Other'}
+        </span>
+      </td>
+      <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+        {/* Add date formatting logic here */}
+      </td>
+    </tr>
+  ))}
+</tbody>
+                      </table>
+                      {/* Pagination */}
+                      <nav
+                        className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+                        aria-label="Pagination"
+                      >
+                        <div className="hidden sm:block">
+                          <p className="text-sm text-gray-700">
+                            Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
+                            <span className="font-medium">20</span> results
+                          </p>
+                        </div>
+                        <div className="flex flex-1 justify-between gap-x-3 sm:justify-end">
+                          <a
+                            href="#"
+                            className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
+                          >
+                            Previous
+                          </a>
+                          <a
+                            href="#"
+                            className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
+                          >
+                            Next
+                          </a>
+                        </div>
+                      </nav>
                     </div>
                   </div>
-                </Dialog>
-              </Transition.Root>
-            )}
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </div>
+      <Dialoggg
+  open={showDialog}
+  onClose={() => {
+    setShowDialog(false);
+    setSelectedPaymentIntent(null);
+  }}
+  selectedPaymentIntent={selectedPaymentIntent}
+/>
     </>
-  )
+  );
 }

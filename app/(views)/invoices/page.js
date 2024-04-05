@@ -24,7 +24,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
-import Dialogg from '../(components)/Dialogg'
+import Dialogg from '../../components/Dialogg'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },

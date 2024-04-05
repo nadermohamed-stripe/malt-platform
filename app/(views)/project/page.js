@@ -33,9 +33,9 @@ const navigation = [
 ];
 
 const statusStyles = {
-  Complete: 'bg-green-100 text-green-800',
-  processing: 'bg-yellow-100 text-yellow-800',
-  failed: 'bg-gray-100 text-gray-800',
+  Complete: 'bg-green-100 text-green-800 rounded-2xl',
+  processing: 'bg-yellow-100 text-yellow-800 rounded-2xl',
+  failed: 'bg-gray-100 text-gray-800 rounded-2xl',
 }
 
 const secondaryNavigation = [
@@ -44,20 +44,22 @@ const secondaryNavigation = [
   { name: 'My settings', href: '#', icon: ShieldCheckIcon },
 ];
 
-const freelancers = [
+const freelancersData = [
     {
       id: 1,
       name: 'Molly Sanders 🇫🇷',
       role: 'Web Designer',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      status: 'Complete'
+      status: 'Complete',
+      amount: 1000
     },
     {
       id: 2,
       name: 'John Doe 🇺🇸',
       role: 'Mobile Developer',
       avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      status: 'processing'
+      status: 'processing',
+      amount: 2000
     },
 ];
 
@@ -73,10 +75,16 @@ function classNames(...classes) {
 }
 
 export default function ProjectDetails() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [freelancers, setFreelancers] = useState(freelancersData); // Use the initial freelancers data
   const [projectAmount, setProjectAmount] = useState(null);
+  const [selectedFreelancer, setSelectedFreelancer] = useState(null);
   const cancelButtonRef = useRef(null);
+
+  const setUpdatedFreelancers = (updatedFreelancers) => {
+    setFreelancers(updatedFreelancers);
+  };
 
   useEffect(() => {
     const fetchProjectAmount = async () => {
@@ -92,11 +100,39 @@ export default function ProjectDetails() {
     fetchProjectAmount();
   }, []);
 
-const handleTransferClick = (freelancer) => {
-  setOpen(true);
-};
+  const handleTransferClick = (freelancer) => {
+    setOpen(true);
+    setSelectedFreelancer(freelancer);
+  };
+  const handleConfirmTransfer = async () => {
+    try {
+      console.log('handleConfirmTransfer called');
+      console.log('selectedFreelancer:', selectedFreelancer);
 
+      const response = await fetch("/api/fpt2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(hardcodedData),
+      });
+      const data = await response.json();
+      console.log("Transfer successful:", data);
+      setOpen(false);
 
+      // Update the status of the selected freelancer
+      console.log('Updating freelancers array');
+      const updatedFreelancers = freelancers.map((freelancer) =>
+        freelancer.id === selectedFreelancer.id
+          ? { ...freelancer, status: 'Complete' }
+          : freelancer
+      );
+      console.log('Updated freelancers array:', updatedFreelancers);
+      setUpdatedFreelancers(updatedFreelancers);
+    } catch (error) {
+      console.error("Error transferring funds:", error);
+    }
+  };
 
   const project = {
     name: 'Web Design Project',
@@ -274,6 +310,9 @@ const handleTransferClick = (freelancer) => {
           >
             Status: {freelancer.status}
           </p>
+          <p className="mt-2 text-sm font-medium text-gray-500">
+            Amount: €{freelancer.amount / 100}
+          </p>
           <button
   type="button"
   className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -293,92 +332,86 @@ const handleTransferClick = (freelancer) => {
           </main>
         </div>
       </div>
-       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                  <div>
+      <Transition.Root show={open} as={Fragment}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        onClose={setOpen}
+      >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <div>
                   <div className="mt-3 text-left sm:mt-5">
-  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-    Transfer Details
-  </Dialog.Title>
-  <div className="mt-2">
-    <div className="flex justify-between mt-4">
-      <p className="text-sm text-gray-500">Invoice ID:</p>
-      <p className="text-sm text-right text-gray-500">{hardcodedData.InvoiceID}</p>
-    </div>
-    <div className="flex justify-between mt-4">
-      <p className="text-sm text-gray-500">Destination:</p>
-      <p className="text-sm text-right text-gray-500">{hardcodedData.Destination}</p>
-    </div>
-    <div className="flex justify-between mt-4">
-      <p className="text-sm text-gray-500">Amount:</p>
-      <p className="text-sm text-right text-gray-500">{hardcodedData.Amount} EUR</p>
-    </div>
-  </div>
-</div>
+                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      Transfer Details
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <div className="flex justify-between mt-4">
+                        <p className="text-sm text-gray-500">Invoice ID:</p>
+                        <p className="text-sm text-right text-gray-500">
+                          {hardcodedData.InvoiceID}
+                        </p>
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <p className="text-sm text-gray-500">Destination:</p>
+                        <p className="text-sm text-right text-gray-500">
+                          {hardcodedData.Destination}
+                        </p>
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        <p className="text-sm text-gray-500">Amount:</p>
+                        <p className="text-sm text-right text-gray-500">
+                          1000 EUR
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 sm:col-start-2"
-                      onClick={async () => {
-                        try {
-                          const response = await fetch("/api/factoring-payment-transfer", {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(hardcodedData),
-                          });
-                          const data = await response.json();
-                          console.log("Transfer successful:", data);
-                          setOpen(false);
-                        } catch (error) {
-                          console.error("Error transferring funds:", error);
-                        }
-                      }}
-                    >
-                      Confirm Transfer
-                    </button>
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                      onClick={() => setOpen(false)}
-                      ref={cancelButtonRef}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                </div>
+                <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 sm:col-start-2"
+                    onClick={handleConfirmTransfer}
+                  >
+                    Confirm Transfer
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                    onClick={() => setOpen(false)}
+                    ref={cancelButtonRef}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
-        </Dialog>
-      </Transition.Root>
-    
-    </>
-  )
-}
+        </div>
+      </Dialog>
+    </Transition.Root>
+  </>
+);
+            }

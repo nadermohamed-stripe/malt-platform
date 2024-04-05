@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/customer-payment-transfer");
+    console.log("Received POST request to /api/cpt1");
     const hardcoded = { InvoiceID: "XXXXX",
                         CustomerID: "cus_Poua0y0f9Xxlip",
                         Amount: 1000, 

@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/factoring-payment-transfer");
+    console.log("Received POST request to /api/cpt1");
     const hardcoded = { InvoiceID: "XXXXX",
                         CustomerID: "cus_Poua0y0f9Xxlip",
                         Amount: 1000, 
@@ -22,7 +22,7 @@ export async function POST(request) {
           type: "customer_balance",
         },
         expand: ['latest_charge'],
-        description:"Factoring Payment for project #p117 ",
+        description:"Customer Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
@@ -48,12 +48,12 @@ export async function POST(request) {
         amount: hardcoded.Amount,
         destination: hardcoded.Destination, 
         source_transaction: Source,
-        description:"Factoring Payment for project #p117 ",
+        description:"Customer Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
           'invoice_id':'#i117',
-          'funds_origin':'factoring',
+          'funds_origin':'customer',
           'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',

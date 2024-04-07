@@ -96,15 +96,17 @@ export default function Dialogg({isOpen, setIsOpen}) {
                 >
                   <Dialog.Panel className="relative bg-white p-4 shadow-xl sm:max-w-lg sm:w-full sm:p-6 sm:rounded-lg">
                   {isLoading ? (
-                      <div className="spinner-container">
-                        <div className="spinner" />
+                    <div className="spinner-container">
+                      <div className="spinner" />
+                    </div>
+                  ) : isSuccess ? (
+                    <div className="flex items-center justify-center h-full">
+                      <div className="flex flex-col items-center justify-center space-y-4">
+                        <CheckCircleIcon className="h-24 w-24 text-green-600 checkmark" aria-hidden="true" />
+                        <p className="text-xl font-medium">Success</p>
                       </div>
-                    ) : isSuccess ? (
-                      <div className="flex flex-col items-center justify-center">
-                        <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" />
-                        <p className="text-lg">Success</p>
-                      </div>
-                    ) : (
+                    </div>
+                  ) : (
                       <>
                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                           {projects[0].name} 

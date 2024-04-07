@@ -1,11 +1,20 @@
+"use client"
+
 import React from 'react';
 import Image from 'next/image';
 import Navbar from '../home/navbar';
+import { useRouter } from 'next/navigation';
 
 export default function Select() {
+  const router = useRouter();
+
+  const handleFreelancerClick = () => {
+    router.push('/freelancer-signup');
+  };
+
   return (
     <div className="flex flex-col h-screen">
-<Navbar />
+      <Navbar />
       <main className="bg-gray-100 flex-grow flex flex-col justify-center items-center px-8">
         <h1 className="text-2xl font-bold mb-8 text-stone-700">
           <span>What kind of account would you like to create?</span>
@@ -22,7 +31,10 @@ export default function Select() {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden w-72 cursor-pointer">
+          <div
+            className="bg-white rounded-lg shadow-md overflow-hidden w-72 cursor-pointer"
+            onClick={handleFreelancerClick}
+          >
             <div className="p-8">
               <div className="flex justify-center mb-4">
                 <Image src="/woman.svg" alt="Malt" width={100} height={100} />

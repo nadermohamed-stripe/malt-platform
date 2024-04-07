@@ -26,38 +26,36 @@ const WebsitePage = () => {
       <Navbar />
 
       {/* Horizontal Layout */}
-      <div className="flex-grow flex">
+      <div className="flex-grow flex border-t-4">
         {/* Left Part (2/3) */}
-        <div className="w-2/3 bg-gray-200 p-4 relative">
+        <div className="w-2/3 bg-white-200 relative">
           {/* Content for the left part */}
-          <h2 className="text-2xl font-bold mb-4">Left Part</h2>
           {currentScreen === 1 && (
-            <p>This is the left part of the page FIRST SCREEN, occupying 2/3 of the width.</p>
+            <img src="./rhs.png" alt="LHS Image" className="w-full" />
           )}
 
           {/* Screen Content */}
           {currentScreen === 2 && (
             <div>
-              <p>This is the left part of the page SECOND SCREEN, occupying 2/3 of the width.</p>
+              <img src="./rhs2.png" alt="LHS Image" className="w-full" />
             </div>
           )}
 
-          {/* Following Button */}
+          {/* Next Button */}
           <div className="absolute bottom-4 right-4">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-rose-500 hover:bg-rose-700 text-white py-2 px-8 rounded-full"
               onClick={handleFollowingClick}
             >
-              Following
+              Next
             </button>
           </div>
         </div>
 
         {/* Right Part (1/3) */}
-        <div className="w-1/3 bg-gray-300 p-4">
+        <div className="w-1/3 bg-gray-300">
           {/* Content for the right part goes here */}
-          <h2 className="text-2xl font-bold mb-4">Right Part</h2>
-          <p>This is the right part of the page, occupying 1/3 of the width.</p>
+          <img src="./lhs.png" alt="LHS Image" className="w-full" />
         </div>
       </div>
     </div>

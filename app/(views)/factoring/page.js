@@ -102,6 +102,30 @@ const projects = [
       timeline: 'April 1, 2023 - May 15, 2023',
       status: 'In Progress',
     },
+    {
+      name: 'Web Design Project',
+      amount: '$5,000',
+      customer: 'Acme Inc.',
+      freelancers: [
+        { name: 'John Doe', amount: '$3,000' },
+        { name: 'Jane Smith', amount: '$2,000' }
+      ],
+      description: 'Design a modern and responsive website for Acme Inc.',
+      timeline: 'April 1, 2023 - May 15, 2023',
+      status: 'In Progress',
+    },
+    {
+      name: 'Web Design Project',
+      amount: '$5,000',
+      customer: 'Acme Inc.',
+      freelancers: [
+        { name: 'John Doe', amount: '$3,000' },
+        { name: 'Jane Smith', amount: '$2,000' }
+      ],
+      description: 'Design a modern and responsive website for Acme Inc.',
+      timeline: 'April 1, 2023 - May 15, 2023',
+      status: 'In Progress',
+    },
     /* ...other projects... */
   ]
   
@@ -541,7 +565,7 @@ export default function Factoring() {
                     </div>
                   </div>
                 ))}
-</div>
+              </div>
             </div>
 
             {selectedProject && (

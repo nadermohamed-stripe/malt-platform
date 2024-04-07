@@ -3,12 +3,18 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {useRouter} from 'next/navigation'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+  const router = useRouter();
+
+  const handleCreateAccountClick = () => {
+    router.push('/select-account');
+  };
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -60,12 +66,13 @@ export default function Navbar() {
 
 
 
-                <button
-                  type="button"
-                  className="ml-4 rounded-3xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600"
-                >
-                  Create My Account
-                </button>
+              <button
+              type="button"
+              className="ml-4 rounded-3xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600"
+              onClick={handleCreateAccountClick}
+            >
+              Create My Account
+            </button>
                 <a
                     href="#"
                     className="ml-2 inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-green-900 hover:border-gray-300 hover:text-gray-700 underline"

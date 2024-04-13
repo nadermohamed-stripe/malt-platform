@@ -73,12 +73,9 @@ const StripeApiResponseSidebar = () => {
                     </div>
                     <div className="flex-1 py-6 overflow-y-auto">
                       <div className="space-y-6 px-4 sm:px-6">
-                        {apiResponses.map(({ url, status, data }, index) => (
+                        {apiResponses.map((response, index) => (
                           <div key={index} className="bg-gray-900 p-4 rounded-md">
-                            <div className="mb-2 text-gray-400">
-                              API Endpoint: {url} {status}
-                            </div>
-                            <pre className="text-sm text-white">{JSON.stringify(data, null, 2)}</pre>
+                            <pre className="text-sm text-white">{JSON.stringify(response, null, 2)}</pre>
                           </div>
                         ))}
                       </div>

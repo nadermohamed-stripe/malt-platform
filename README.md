@@ -20,10 +20,10 @@ If you want to see the app in production: https://malt-platform.vercel.app/
 
 ## What is missing:
 
-
+[] Create Stripe Account and real Connected Accounts for demo journey
 [] Add Money dialog to be fixed
 [] Fix /factoring send money success animation
-[] Terminal to show API Responses for devs
+[] API responses terminal done in loreal - to be added to all pages
 
 
 WE NEED A STORY!!!! A PROJECT, A COMPELLING EVENT FOR FREELANCER AND CUSTOMER!!!

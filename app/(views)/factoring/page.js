@@ -23,6 +23,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
+import StripeApiResponseSidebar from '@/app/components/StripeApiResponseSidebar'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -146,6 +147,9 @@ export default function Factoring() {
       try {
         const response = await fetch('/api/get-amounts');
         const data = await response.json();
+        const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];
+        stripeApiResponses.push(data);
+        localStorage.setItem('stripeApiResponses', JSON.stringify(stripeApiResponses));
         setAccountBalance(data.amount);
       } catch (error) {
         console.error('Error fetching account balance:', error);

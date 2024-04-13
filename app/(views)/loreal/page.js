@@ -106,14 +106,11 @@ export default function Loreal() {
       try {
         const response = await fetch('/api/get-amounts');
         const data = await response.json();
-  
+
         const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];
-        stripeApiResponses.push({
-          url: '/api/get-amounts',
-          status: response.status,
-          data: data,
-        });
+        stripeApiResponses.push(data);
         localStorage.setItem('stripeApiResponses', JSON.stringify(stripeApiResponses));
+        
         setAccountBalance(data.amount);
       } catch (error) {
         console.error('Error fetching account balance:', error);

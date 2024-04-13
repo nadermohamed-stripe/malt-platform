@@ -60,7 +60,7 @@ const days = [
         invoiceNumber: '00011',
         href: '#',
         amount: '$10,000.00 USD',
-        status: 'Withdraw',
+        status: 'Upcoming',
         client: 'Tom Cook',
         description: 'Salary',
         icon: ArrowDownCircleIcon,
@@ -98,7 +98,7 @@ const days = [
         invoiceNumber: '00011',
         href: '#',
         amount: '$10,000.00 USD',
-        status: 'Withdraw',
+        status: 'Upcoming',
         client: 'Tom Cook',
         description: 'Salary',
         icon: ArrowDownCircleIcon,
@@ -109,7 +109,7 @@ const days = [
 
 const statuses = {
     Paid: 'text-green-700 bg-green-50 ring-green-600/20',
-    Withdraw: 'text-gray-600 bg-gray-50 ring-gray-500/10',
+    Upcoming: 'text-gray-600 bg-gray-50 ring-gray-500/10',
     Overdue: 'text-red-700 bg-red-50 ring-red-600/10',
 }
 
@@ -491,7 +491,7 @@ export default function Invoices() {
                           </h2>
                           <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:max-w-none" href="#" onClick={() => setFilter("Overdue")}>Overdue</h2>
                           <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:max-w-none" href="#" onClick={() => setFilter("Paid")}>Paid</h2>
-                          <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:max-w-none" href="#" onClick={() => setFilter("Withdraw")}>Withdraw</h2>
+                          <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:max-w-none" href="#" onClick={() => setFilter("Upcoming")}>Upcoming</h2>
                         </div>
                     </div>
 

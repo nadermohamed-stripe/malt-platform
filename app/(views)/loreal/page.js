@@ -1,6 +1,7 @@
 "use client"
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import StripeApiResponseSidebar from '@/app/components/StripeApiResponseSidebar'
 import {
   Bars3CenterLeftIcon,
   BellIcon,
@@ -105,6 +106,14 @@ export default function Loreal() {
       try {
         const response = await fetch('/api/get-amounts');
         const data = await response.json();
+  
+        const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];
+        stripeApiResponses.push({
+          url: '/api/get-amounts',
+          status: response.status,
+          data: data,
+        });
+        localStorage.setItem('stripeApiResponses', JSON.stringify(stripeApiResponses));
         setAccountBalance(data.amount);
       } catch (error) {
         console.error('Error fetching account balance:', error);
@@ -428,6 +437,7 @@ export default function Loreal() {
                     >
                       Add money
                     </button>
+                    <StripeApiResponseSidebar />
                     <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-rose-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"

@@ -84,7 +84,7 @@ export default function Smb() {
   useEffect(() => {
     const fetchProjectAmount = async () => {
       try {
-        const response = await fetch('/api/get-amounts');
+        const response = await fetch('/api/get-amounts-smb');
         const data = await response.json();
         setProjectAmount(data.amount);
       } catch (error) {

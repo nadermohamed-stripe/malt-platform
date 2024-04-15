@@ -104,7 +104,7 @@ export default function Loreal() {
   useEffect(() => {
     const fetchAccountBalance = async () => {
       try {
-        const response = await fetch('/api/get-amounts');
+        const response = await fetch('/api/get-amounts-loreal');
         const data = await response.json();
 
         const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];

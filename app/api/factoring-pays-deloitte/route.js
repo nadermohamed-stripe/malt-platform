@@ -7,11 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/cpt2");
+    console.log("Received POST request to /api/factoring-pays-deloitte");
     const hardcoded = { InvoiceID: "XXXXX",
-                        CustomerID: "cus_Poua0y0f9Xxlip",
+                        CustomerID: "cus_PvfN0rW5sbT5Rq",
                         Amount: 1000, 
-                        Destination: "acct_1OUwUTGbDdjHL2Vv" };
+                        Destination: "acct_1P5rNgQuWz7LVQL7" }; ///LINUS UK
+                        
     const intent = await stripe.paymentIntents.create({
         amount: hardcoded.Amount,
         currency: "eur", 
@@ -22,13 +23,13 @@ export async function POST(request) {
           type: "customer_balance",
         },
         expand: ['latest_charge'],
-        description:"Customer Payment for project #p117 ",
+        description:"Factoring Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
           'invoice_id':'#i117',
           'funds_origin':'factoring',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
@@ -48,13 +49,13 @@ export async function POST(request) {
         amount: hardcoded.Amount,
         destination: hardcoded.Destination, 
         source_transaction: Source,
-        description:"Customer Payment for project #p117 ",
+        description:"Factoring Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
           'invoice_id':'#i117',
-          'funds_origin':'customer',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_origin':'factoring',
+          'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },

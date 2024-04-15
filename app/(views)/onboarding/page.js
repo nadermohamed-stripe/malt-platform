@@ -42,7 +42,7 @@ export default function Onboarding() {
 
     return loadConnectAndInitialize({
       // This is your test publishable API key.
-      publishableKey: "pk_test_51OssRnJaECsReuuZua201pHkkS7blEbqchA74ZIHgmTiuPyPNzSjVyG38qTIl3tRWHN9SE4qOfeYJsO9kzhoUn2c0046SQbjzt",
+      publishableKey: "pk_test_51P5nnRJoM91GmNSBW0Kz8PrBd0DD5JXiuc1xzt4DNrRPs30hmZHELz5LLRuZJmASXU0Ar1ZmRvpn0GCLJmHXO5iF005IOUBsQ0",
       fetchClientSecret: fetchClientSecret,
     })
   });

@@ -101,7 +101,7 @@ export default function Deloitte() {
   useEffect(() => {
     const fetchAccountBalance = async () => {
       try {
-        const response = await fetch('/api/get-amounts');
+        const response = await fetch('/api/get-amounts-deloitte');
         const data = await response.json();
         setAccountBalance(data.amount);
       } catch (error) {

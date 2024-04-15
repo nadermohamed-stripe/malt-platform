@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     try {
       console.log("Received POST request to /api/account-session");
         const accountSession = await stripe.accountSessions.create({
-          account: 'acct_1P2BEJ2fVwX3EM6V',
+          account: 'acct_1P5obZQrmkyHV9Vf',
           components: {
             payments: {
               enabled: true,

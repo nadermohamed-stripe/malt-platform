@@ -18,19 +18,19 @@ import {
 import {
   BanknotesIcon,
   BuildingOfficeIcon,
-  CheckIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
+import StripeApiResponseSidebar from '@/app/components/StripeApiResponseSidebar'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
   { name: 'Inbox', href: '#', icon: ClockIcon, current: false },
   { name: 'Enhance My Profile', href: '#', icon: ScaleIcon, current: false },
   { name: 'Manage My Projects', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Invoices & Payments', href: '/invoices', icon: UserGroupIcon, current: false },
+  { name: 'Invoices & Payments', href: '#', icon: UserGroupIcon, current: false },
 //   { name: 'Resources', href: '#', icon: DocumentChartBarIcon, current: false },
 ]
 const secondaryNavigation = [
@@ -41,17 +41,17 @@ const secondaryNavigation = [
 const cards = [
     {
       name: 'Web Design Project',
-      href: '/project-smb',
+      href: '/project',
       icon: CreditCardIcon,
       amount: '$5,000',
       deadline: 'May 15, 2023',
-      client: 'Acme Inc.',
+      client: 'Loreal',
       description: 'Design a modern and responsive website for Acme Inc.',
       status: 'In Progress',
     },
     {
       name: 'Mobile App Development',
-      href: '/project-smb',
+      href: '/project',
       icon: ScaleIcon,
       amount: '$8,000',
       deadline: 'June 30, 2023',
@@ -61,7 +61,7 @@ const cards = [
     },
     {
       name: 'SEO Optimization',
-      href: '/project-smb',
+      href: '/project',
       icon: DocumentChartBarIcon,
       amount: '$3,500',
       deadline: 'August 1, 2023',
@@ -90,21 +90,64 @@ const statusStyles = {
   failed: 'bg-gray-100 text-gray-800',
 }
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+const projects = [
+    {
+      name: 'Web Design Project',
+      amount: '$5,000',
+      customer: 'Loreal',
+      freelancers: [
+        { name: 'Xavier', amount: '$3,000' },
+      ],
+      description: 'Design a modern and responsive website for Acme Inc.',
+      timeline: 'April 1, 2023 - May 15, 2023',
+      status: 'In Progress',
+    },
+    {
+      name: 'Web Design Project',
+      amount: '$5,000',
+      customer: 'Deloitte DE',
+      freelancers: [
+        { name: 'John', amount: '$3,000' },
+        { name: 'Linus', amount: '$2,000' }
+      ],
+      description: 'Design a modern and responsive website for Acme Inc.',
+      timeline: 'April 1, 2023 - May 15, 2023',
+      status: 'In Progress',
+    },
+    {
+      name: 'Web Design Project',
+      amount: '$5,000',
+      customer: 'SMB Inc.',
+      freelancers: [
+        { name: 'Manue', amount: '$3,000' },
+      ],
+      description: 'Design a modern and responsive website for Acme Inc.',
+      timeline: 'April 1, 2023 - May 15, 2023',
+      status: 'In Progress',
+    },
+    /* ...other projects... */
+  ]
+  
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
-export default function Smb() {
+export default function Factoring() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [accountBalance, setAccountBalance] = useState(null);
-  const [open, setOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
 
   useEffect(() => {
     const fetchAccountBalance = async () => {
       try {
-        const response = await fetch('/api/get-amounts-smb');
+        const response = await fetch('/api/get-amounts-factoring');
         const data = await response.json();
+        const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];
+        stripeApiResponses.push(data);
+        localStorage.setItem('stripeApiResponses', JSON.stringify(stripeApiResponses));
         setAccountBalance(data.amount);
       } catch (error) {
         console.error('Error fetching account balance:', error);
@@ -113,8 +156,68 @@ export default function Smb() {
     fetchAccountBalance();
   }, []);
 
+  const handleAcceptClick = async () => {
+    setIsLoading(true);
+    setIsSuccess(false); // Ensure success is not shown initially
+    try {
+      const response = await fetch('/api/factoring-pays-loreal', { method: 'POST' });
+      const data = await response.json();
+      if (response.ok && data.Transfer) {
+        setTimeout(() => {
+          setIsLoading(false); // Stop the spinner
+          setIsSuccess(true); // Show success checkmark
+          
+          setTimeout(() => {
+            setIsSuccess(false); // Reset success for next time
+            setSelectedProject(null); // Close the dialog
+          }, 2000); // Show success for 2 seconds then close dialog
+        }, 2000); // Assume showing spinner for 2 seconds for demo
+      } else {
+        setIsLoading(false);
+        console.error('Transfer failed:', data.error);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error processing transfer:', error);
+    }
+  };
+  
+
   return (
     <>
+<style>
+  {`
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spinner-container {
+      position: relative;
+      height: 300px; /* Same height as spinner for alignment */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .spinner {
+      position: absolute;
+      border: 8px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #000;
+      border-right-color: #000;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      animation: spin 0.5s ease-in-out infinite;
+    }
+    .checkmark {
+      position: absolute;
+      animation: fadeIn 1s; /* Simple fade-in animation for the checkmark */
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  `}
+</style>
       <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 lg:hidden" onClose={setSidebarOpen}>
@@ -216,50 +319,50 @@ export default function Smb() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-grow flex-col overflow-y-auto bg-white shadow-lg pb-4 pt-5">
-            <div className="flex flex-shrink-0 items-center px-4">
-              <img
-                className="h-8 w-auto"
-                src='./malt-logo-red.svg'
-                alt="Easywire logo"
-              />
-            </div>
-            <nav className="mt-5 flex flex-1 flex-col divide-y divide-gray-200 overflow-y-auto" aria-label="Sidebar">
-              <div className="space-y-5 px-2">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                      'group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6'
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-              <div className="mt-8 pt-8">
-                <div className="space-y-5 px-2">
-                  {secondaryNavigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                    >
-                      <item.icon className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </div>
+<div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+  {/* Sidebar component, swap this element with another sidebar if you like */}
+  <div className="flex flex-grow flex-col overflow-y-auto bg-white shadow-lg pb-4 pt-5">
+    <div className="flex flex-shrink-0 items-center px-4">
+      <img
+        className="h-8 w-auto"
+        src='./malt-logo-red.svg'
+        alt="Easywire logo"
+      />
+    </div>
+    <nav className="mt-5 flex flex-1 flex-col divide-y divide-gray-200 overflow-y-auto" aria-label="Sidebar">
+      <div className="space-y-5 px-2">
+        {navigation.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className={classNames(
+              item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+              'group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6'
+            )}
+            aria-current={item.current ? 'page' : undefined}
+          >
+            <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400" aria-hidden="true" />
+            {item.name}
+          </a>
+        ))}
+      </div>
+      <div className="mt-8 pt-8">
+        <div className="space-y-5 px-2">
+          {secondaryNavigation.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+            >
+              <item.icon className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
+              {item.name}
+            </a>
+          ))}
         </div>
+      </div>
+    </nav>
+  </div>
+</div>
 
         <div className="flex flex-1 flex-col lg:pl-64">
           <div className="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:border-none">
@@ -309,11 +412,11 @@ export default function Smb() {
                       <span className="absolute -inset-1.5 lg:hidden" />
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="./loreal.png"
+                        src="./factoring.jpg"
                         alt=""
                       />
                       <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
-                        <span className="sr-only">Open user menu for </span>SMB
+                        <span className="sr-only">Open user menu for </span>Factoring
                       </span>
                       <ChevronDownIcon
                         className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
@@ -377,18 +480,18 @@ export default function Smb() {
                     <div className="flex items-center">
                       <img
                         className="hidden h-16 w-16 rounded-full sm:block"
-                        src="./loreal.png"
+                        src="./factoring.jpg"
                         alt=""
                       />
                       <div>
                         <div className="flex items-center">
                           <img
                             className="h-16 w-16 rounded-full sm:hidden"
-                            src="./loreal"
+                            src="./factoring.jpg"
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            SMB {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
+                            Factoring {accountBalance ? `€${accountBalance/100}` : 'Loading...'}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -398,7 +501,7 @@ export default function Smb() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                               aria-hidden="true"
                             />
-                            41 Rue Martre, 92117 Clichy, France
+                            Kurfürstendamm 23 10719 Berlin
                           </dd>
                           <dt className="sr-only">Account status</dt>
                           <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
@@ -424,7 +527,6 @@ export default function Smb() {
                     <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                      onClick={() => setOpen(true)}
                     >
                       Add money
                     </button>
@@ -439,264 +541,132 @@ export default function Smb() {
               </div>
             </div>
 
-            <div className="mt-8">
-              <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                <h2 className="text-lg font-medium leading-6 text-gray-900">My Projects</h2>
-                <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {cards.map((card) => (
-                    <div key={card.name} className="overflow-hidden rounded-lg bg-white shadow">
-                      <div className="p-5">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0">
-                            <card.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-                          </div>
-                          <div className="ml-5 w-0 flex-1">
-                            <dl>
-                              <dt className="truncate text-sm font-medium text-gray-500">{card.name}</dt>
-                              <dd>
-                                <div className="text-lg font-medium text-gray-900">{card.amount}</div>
-                              </dd>
-                            </dl>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <p className="mt-1 text-sm text-gray-500">{card.description}</p>
-                          <p className="mt-1 text-sm text-gray-500">Freelancer: {card.client}</p>
-                          <p className="mt-2 text-sm font-medium text-gray-500">Status: {card.status}</p>
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 px-5 py-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <div>
-                            <p className="text-gray-500">Deadline: {card.deadline}</p>
-                          </div>
-                          <div>
-                            <a href={card.href} className="font-medium text-cyan-700 hover:text-cyan-900">
-                              View Project
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
-                Recent activity
-              </h2>
-
-              {/* Activity list (smallest breakpoint only) */}
-              <div className="shadow sm:hidden">
-                <ul role="list" className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
-                  {transactions.map((transaction) => (
-                    <li key={transaction.id}>
-                      <a href={transaction.href} className="block bg-white px-4 py-4 hover:bg-gray-50">
-                        <span className="flex items-center space-x-4">
-                          <span className="flex flex-1 space-x-2 truncate">
-                            <BanknotesIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                            <span className="flex flex-col truncate text-sm text-gray-500">
-                              <span className="truncate">{transaction.name}</span>
-                              <span>
-                                <span className="font-medium text-gray-900">{transaction.amount}</span>{' '}
-                                {transaction.currency}
-                              </span>
-                              <time dateTime={transaction.datetime}>{transaction.date}</time>
-                            </span>
-                          </span>
-                          <ChevronRightIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                <nav
-                  className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3"
-                  aria-label="Pagination"
-                >
-                  <div className="flex flex-1 justify-between">
-                    <a
-                      href="#"
-                      className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Previous
-                    </a>
-                    <a
-                      href="#"
-                      className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Next
-                    </a>
-                  </div>
-                </nav>
-              </div>
-
-              {/* Activity table (small breakpoint and up) */}
-              <div className="hidden sm:block">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                  <div className="mt-2 flex flex-col">
-                    <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <thead>
-                          <tr>
-                            <th
-                              className="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                              scope="col"
-                            >
-                              Transaction
-                            </th>
-                            <th
-                              className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
-                              scope="col"
-                            >
-                              Amount
-                            </th>
-                            <th
-                              className="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block"
-                              scope="col"
-                            >
-                              Status
-                            </th>
-                            <th
-                              className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
-                              scope="col"
-                            >
-                              Date
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
-                          {transactions.map((transaction) => (
-                            <tr key={transaction.id} className="bg-white">
-                              <td className="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                                <div className="flex">
-                                  <a href={transaction.href} className="group inline-flex space-x-2 truncate text-sm">
-                                    <BanknotesIcon
-                                      className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                      aria-hidden="true"
-                                    />
-                                    <p className="truncate text-gray-500 group-hover:text-gray-900">
-                                      {transaction.name}
-                                    </p>
-                                  </a>
-                                </div>
-                              </td>
-                              <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-                                <span className="font-medium text-gray-900">{transaction.amount}</span>
-                                {transaction.currency}
-                              </td>
-                              <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
-                                <span
-                                  className={classNames(
-                                    statusStyles[transaction.status],
-                                    'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize'
-                                  )}
-                                >
-                                  {transaction.status}
-                                </span>
-                              </td>
-                              <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-                                <time dateTime={transaction.datetime}>{transaction.date}</time>
-                              </td>
-                            </tr>
+                {/* Project grid */}
+            <div className="mt-8 px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+              <h2 className="text-lg leading-6 font-medium text-gray-900">Projects</h2>
+              <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {/* Project cards */}
+                {projects.map((project) => (
+                  <div
+                    key={project.name}
+                    className="bg-white overflow-hidden shadow rounded-lg cursor-pointer divide-y divide-gray-200 hover:shadow-lg transition-shadow"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <div className="p-5">
+                      <h3 className="text-lg font-medium text-gray-900">{project.name}</h3>
+                      <p className="mt-1 text-sm text-gray-500">Customer: {project.customer}</p>
+                      <p className="mt-1 text-sm text-gray-500">Amount: {project.amount}</p>
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-gray-900">Freelancers:</h4>
+                        <ul className="mt-2">
+                          {project.freelancers.map(freelancer => (
+                            <li key={freelancer.name} className="text-sm text-gray-500">{freelancer.name} - {freelancer.amount}</li>
                           ))}
-                        </tbody>
-                      </table>
-                      {/* Pagination */}
-                      <nav
-                        className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
-                        aria-label="Pagination"
-                      >
-                        <div className="hidden sm:block">
-                          <p className="text-sm text-gray-700">
-                            Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-                            <span className="font-medium">20</span> results
-                          </p>
-                        </div>
-                        <div className="flex flex-1 justify-between gap-x-3 sm:justify-end">
-                          <a
-                            href="#"
-                            className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
-                          >
-                            Previous
-                          </a>
-                          <a
-                            href="#"
-                            className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
-                          >
-                            Next
-                          </a>
-                        </div>
-                      </nav>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
+
+            {selectedProject && (
+              <Transition.Root show={true} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={() => setSelectedProject(null)}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                  </Transition.Child>
+
+                  <div className="fixed inset-0 z-10 overflow-y-auto">
+                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enterTo="opacity-100 translate-y-0 sm:scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                        leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                      >
+                        <Dialog.Panel className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                          <div>
+                            <div className="mt-3 text-center sm:mt-5">
+{/* Conditional render inside Dialog.Panel based on isLoading and isSuccess */}
+<>
+{isLoading ? (
+    <div className="spinner-container">
+      <div className="spinner" />
+    </div>
+  ) : isSuccess ? (
+    <div className="flex flex-col items-center justify-center">
+      <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" />
+      <p className="text-lg">Success</p>
+    </div>
+  ) : (
+    <>
+      <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+        {selectedProject.name}
+      </Dialog.Title>
+      <div className="mt-2">
+        <p className="text-sm text-gray-500">{selectedProject.description}</p>
+        <p className="mt-4 text-sm text-gray-600">Customer: {selectedProject.customer}</p>
+        <p className="mt-2 text-sm text-gray-600">Amount: {selectedProject.amount}</p>
+        <p className="mt-2 text-sm text-gray-600">Timeline: {selectedProject.timeline}</p>
+        <div className="mt-4">
+          <h4 className="text-sm font-medium text-gray-900">Freelancers Payments:</h4>
+          <ul className="mt-2">
+            {selectedProject.freelancers.map(freelancer => (
+              <li key={freelancer.name} className="text-sm text-gray-500">{freelancer.name} - {freelancer.amount}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-5">
+          <img src="https://via.placeholder.com/400x200?text=Gantt+Chart+Placeholder" alt="Gantt Chart" className="mx-auto" />
+          <p className="mt-2 text-xs text-gray-400">* This is a placeholder image representing a Gantt chart.</p>
+        </div>
+      </div>
+    </>
+  )}
+</>
+</div>
+</div>
+
+                            
+                          
+                          <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                          <button
+  type="button"
+  className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:col-start-2 sm:text-sm"
+  onClick={handleAcceptClick} // Updated
+>
+  Accept
+</button>
+                            <button
+                              type="button"
+                              className="mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                              onClick={() => setSelectedProject(null)}
+                            >
+                              Deny
+                            </button>
+                          </div>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition.Root>
+            )}
           </main>
         </div>
       </div>
-
-      {/* Add Money Dialog */}
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-y-auto z-50" onClose={setOpen}>
-          <div className="flex items-center justify-center min-h-screen p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-40" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="inline-block align-middle h-screen" aria-hidden="true">
-              &#8203;
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
-                      <CheckIcon className="w-12 h-12 text-green-600" aria-hidden="true" />
-                    </div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                        Payment successful
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-5 sm:mt-6">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
-                      onClick={() => setOpen(false)}
-                    >
-                      Go back to dashboard
-                    </button>
-                  </div>
-                </div>
-              </Transition.Child>
-            </span>
-          </div>
-        </Dialog>
-      </Transition.Root>
     </>
   )
 }

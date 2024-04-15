@@ -7,11 +7,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/fpt1");
+    console.log("Received POST request to /api/deloitte-pays-factoring");
     const hardcoded = { InvoiceID: "XXXXX",
-                        CustomerID: "cus_Poua0y0f9Xxlip",
+                        CustomerID: "cus_PvjHIMouxuMvhs",
                         Amount: 1000, 
-                        Destination: "acct_1OUwUTGbDdjHL2Vv" };
+                        Destination: "acct_1P5pG7R7oRvG1u9R" };
                         
     const intent = await stripe.paymentIntents.create({
         amount: hardcoded.Amount,

@@ -7,11 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/cpt1");
+    console.log("Received POST request to /api/loreal-pays-factoring");
     const hardcoded = { InvoiceID: "XXXXX",
-                        CustomerID: "cus_Poua0y0f9Xxlip",
-                        Amount: 1000, 
-                        Destination: "acct_1OUwUTGbDdjHL2Vv" };
+                        CustomerID: "cus_PvfNblCZtr1DWK",
+                        Amount: 10000, 
+                        Destination: "acct_1P5pG7R7oRvG1u9R" };
+                        
     const intent = await stripe.paymentIntents.create({
         amount: hardcoded.Amount,
         currency: "eur", 
@@ -22,13 +23,13 @@ export async function POST(request) {
           type: "customer_balance",
         },
         expand: ['latest_charge'],
-        description:"Customer Payment for project #p117 ",
+        description:"Factoring Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
           'invoice_id':'#i117',
           'funds_origin':'factoring',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
@@ -42,23 +43,36 @@ export async function POST(request) {
           },
         },
     });
-    const Source = intent.latest_charge.id
+
+    const pi = intent.id
+    const applybalance = await stripe.paymentIntents.applyCustomerBalance(
+      pi
+    );
+
+    const latest_charge = await stripe.paymentIntents.retrieve(
+      pi
+    );
+  
+    const Source = latest_charge.latest_charge
+
+    
     const transfers = await stripe.transfers.create({
         currency: "eur", 
         amount: hardcoded.Amount,
         destination: hardcoded.Destination, 
         source_transaction: Source,
-        description:"Customer Payment for project #p117 ",
+        description:"Factoring Payment for project #p117 ",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
           'invoice_id':'#i117',
-          'funds_origin':'customer',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_origin':'factoring',
+          'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
     });
+    
     return NextResponse.json({  Transfer: transfers.id }, { status: 200});
   } catch (error) {
     console.error('Error creating customer:', error);

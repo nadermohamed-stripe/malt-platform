@@ -45,7 +45,7 @@ const cards = [
       icon: CreditCardIcon,
       amount: '$5,000',
       deadline: 'May 15, 2023',
-      client: 'Acme Inc.',
+      client: 'Loreal',
       description: 'Design a modern and responsive website for Acme Inc.',
       status: 'In Progress',
     },
@@ -94,10 +94,9 @@ const projects = [
     {
       name: 'Web Design Project',
       amount: '$5,000',
-      customer: 'Acme Inc.',
+      customer: 'Loreal',
       freelancers: [
-        { name: 'John Doe', amount: '$3,000' },
-        { name: 'Jane Smith', amount: '$2,000' }
+        { name: 'Xavier', amount: '$3,000' },
       ],
       description: 'Design a modern and responsive website for Acme Inc.',
       timeline: 'April 1, 2023 - May 15, 2023',
@@ -106,10 +105,10 @@ const projects = [
     {
       name: 'Web Design Project',
       amount: '$5,000',
-      customer: 'Acme Inc.',
+      customer: 'Deloitte DE',
       freelancers: [
-        { name: 'John Doe', amount: '$3,000' },
-        { name: 'Jane Smith', amount: '$2,000' }
+        { name: 'John', amount: '$3,000' },
+        { name: 'Linus', amount: '$2,000' }
       ],
       description: 'Design a modern and responsive website for Acme Inc.',
       timeline: 'April 1, 2023 - May 15, 2023',
@@ -118,10 +117,9 @@ const projects = [
     {
       name: 'Web Design Project',
       amount: '$5,000',
-      customer: 'Acme Inc.',
+      customer: 'SMB Inc.',
       freelancers: [
-        { name: 'John Doe', amount: '$3,000' },
-        { name: 'Jane Smith', amount: '$2,000' }
+        { name: 'Manue', amount: '$3,000' },
       ],
       description: 'Design a modern and responsive website for Acme Inc.',
       timeline: 'April 1, 2023 - May 15, 2023',
@@ -145,7 +143,7 @@ export default function Factoring() {
   useEffect(() => {
     const fetchAccountBalance = async () => {
       try {
-        const response = await fetch('/api/get-amounts');
+        const response = await fetch('/api/get-amounts-factoring');
         const data = await response.json();
         const stripeApiResponses = JSON.parse(localStorage.getItem('stripeApiResponses')) || [];
         stripeApiResponses.push(data);
@@ -162,7 +160,7 @@ export default function Factoring() {
     setIsLoading(true);
     setIsSuccess(false); // Ensure success is not shown initially
     try {
-      const response = await fetch('/api/fpt1', { method: 'POST' });
+      const response = await fetch('/api/factoring-pays-deloitte', { method: 'POST' });
       const data = await response.json();
       if (response.ok && data.Transfer) {
         setTimeout(() => {
@@ -519,7 +517,7 @@ export default function Factoring() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
                               aria-hidden="true"
                             />
-                            VBAN: IT1234567890123456789012345
+                            VBAN: FR47815510203546361043119564
                           </dd>
                         </dl>
                       </div>

@@ -89,7 +89,7 @@ export default function ProjectDetails() {
   useEffect(() => {
     const fetchProjectAmount = async () => {
       try {
-        const response = await fetch('/api/get-amounts');
+        const response = await fetch('/api/get-amounts-deloitte');
         const data = await response.json();
         setProjectAmount(data.amount);
       } catch (error) {
@@ -109,7 +109,7 @@ export default function ProjectDetails() {
       console.log('handleConfirmTransfer called');
       console.log('selectedFreelancer:', selectedFreelancer);
 
-      const response = await fetch("/api/fpt2", {
+      const response = await fetch("/api/deloitte-pays-factoring", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -26,4 +26,9 @@ If you want to see the app in production: https://malt-platform.vercel.app/
 [] API responses terminal done in loreal - to be added to all pages
 
 
-WE NEED A STORY!!!! A PROJECT, A COMPELLING EVENT FOR FREELANCER AND CUSTOMER!!!
+WE NEED A STORY!!!! A PROJECT, A COMPELLING EVENT FOR FREELANCER AND CUSTOMER!!! 
+
+
+- ONLY ONE USER ONBOARDING
+- OTHER CONNECTED ACCOUNTS ALREADY READY
+- CUSTOMER LOREAL NO AUTOMATIC RECONCILIATION 

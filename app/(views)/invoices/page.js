@@ -61,8 +61,8 @@ const days = [
         href: '#',
         amount: '$10,000.00 USD',
         status: 'Upcoming',
-        client: 'Tom Cook',
-        description: 'Salary',
+        client: 'Factoring',
+        description: 'Payment Partner',
         icon: ArrowDownCircleIcon,
       },
       {
@@ -99,8 +99,8 @@ const days = [
         href: '#',
         amount: '$10,000.00 USD',
         status: 'Upcoming',
-        client: 'Tom Cook',
-        description: 'Salary',
+        client: 'Xavier',
+        description: 'Website redesign',
         icon: ArrowDownCircleIcon,
       },
     ],
@@ -117,6 +117,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+const handleAddMoney = async () => {
+  try {
+    const response = await fetch('/api/loreal-pays-freelancers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // You can add any additional logic here, such as displaying a success message or updating the UI
+    console.log('Money added successfully!');
+  } catch (error) {
+    console.error('Error adding money:', error);
+  }
+};
+
 export default function Invoices() {
  const [filteredStatus, setFilteredStatus] = useState(null);
  const [accountBalance, setAccountBalance] = useState(null);
@@ -124,7 +144,7 @@ export default function Invoices() {
  useEffect(() => {
   const fetchAccountBalance = async () => {
     try {
-      const response = await fetch('/api/get-amounts');
+      const response = await fetch('/api/get-amounts-loreal');
       const data = await response.json();
       setAccountBalance(data.amount);
     } catch (error) {
@@ -468,6 +488,7 @@ export default function Invoices() {
                     <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      onClick={handleAddMoney}
                     >
                       Add money
                     </button>

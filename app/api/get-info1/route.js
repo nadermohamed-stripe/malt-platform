@@ -7,7 +7,7 @@ export async function POST(request) {
   try {
     console.log("Received GET request to /api/get-info1");
     const customerCashBalanceTransactions = await stripe.customers.listCashBalanceTransactions(
-      "cus_Poua0y0f9Xxlip",
+      "cus_PvjHIMouxuMvhs",
       {
         expand: ["data.applied_to_payment.payment_intent"],
       }

@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(request) {
   try {
     console.log("Received POST request to /api/factoring-pays-deloitte");
-    const hardcoded = { InvoiceID: "XXXXX",
+    const hardcoded = { InvoiceID: "i117",
                         CustomerID: "cus_PvfN0rW5sbT5Rq",
                         Amount: 1000, 
                         Destination: "acct_1P5rNgQuWz7LVQL7" }; ///LINUS UK
@@ -23,11 +23,11 @@ export async function POST(request) {
           type: "customer_balance",
         },
         expand: ['latest_charge'],
-        description:"Factoring Payment for project #p117 ",
+        description:"Factoring Payment for project #p117",
         metadata:{
           'payment_type':'payment',
           'project_id':'#p117',
-          'invoice_id':'#i117',
+          'invoice_id':'#p117',
           'funds_origin':'factoring',
           'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
           'funds_destination': 'freelancer',

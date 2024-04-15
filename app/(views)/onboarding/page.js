@@ -44,31 +44,44 @@ export default function Onboarding() {
       // This is your test publishable API key.
       publishableKey: "pk_test_51P5nnRJoM91GmNSBW0Kz8PrBd0DD5JXiuc1xzt4DNrRPs30hmZHELz5LLRuZJmASXU0Ar1ZmRvpn0GCLJmHXO5iF005IOUBsQ0",
       fetchClientSecret: fetchClientSecret,
-    })
+      fonts: [
+        {
+          cssSrc: "https://fonts.googleapis.com/css?family=Open+Sans",
+        },
+        {
+          src: `url(https://my-domain.com/assets/avenir.woff)`,
+          family: 'My Font'
+        }
+      ],
+      appearance: {
+        // See all possible variables below
+        overlays: "dialog",
+        variables: {
+          fontFamily: 'My Font',
+          colorPrimary: "#FF0000",
+        },
+      }
+    });
   });
 
 
   return (
     <header className="bg-white">
-    <Navbar />
-
-
-
+      <Navbar />
 
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign up to your account
-            </h2>
-            <div id="error" hidden></div>
-            <div className="container">
-      <ConnectComponentsProvider connectInstance={stripeConnectInstance}>
-        <ConnectAccountOnboarding />
-      </ConnectComponentsProvider>
-    </div>
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Sign up to your account
+          </h2>
+          <div id="error" hidden></div>
+          <div className="container">
+            <ConnectComponentsProvider connectInstance={stripeConnectInstance}>
+              <ConnectAccountOnboarding />
+            </ConnectComponentsProvider>
           </div>
-          </div>
+        </div>
+      </div>
     </header>
-    
-  )
+  );
 }

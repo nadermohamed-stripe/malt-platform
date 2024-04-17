@@ -68,7 +68,7 @@ export async function POST(request) {
       amount: 1000,
       currency: "eur", 
       payment_method_types:['customer_balance'],
-      customer: hardcoded.CustomerID,
+      customer: vars.customer_id_deloitte,
       confirm:true,
       payment_method_data:{
         type: "customer_balance",

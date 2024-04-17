@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+const vars = require('../../vars');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -8,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     try {
       console.log("Received POST request to /api/account-session-linus");
         const accountSession = await stripe.accountSessions.create({
-          account: 'acct_1P5rNgQuWz7LVQL7',
+          account: vars.clean_onboarding_individual_linus,
           // components: {
           //   payments: {
           //     enabled: true,

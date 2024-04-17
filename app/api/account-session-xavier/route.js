@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+const vars = require('../../vars');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -8,28 +9,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     try {
       console.log("Received POST request to /api/account-session-xavier");
         const accountSession = await stripe.accountSessions.create({
-          account: 'acct_1P5obZQrmkyHV9Vf',
+          account: vars.clean_onboarding_individual_xavier,
           components: {
 
-            // payments: {
-
-            //   enabled: true,
-            //   features: {
-            //     refund_management: true,
-            //     dispute_management: true,
-            //     capture_payments: true,
-            //   },
-            // },
             account_onboarding: {
               enabled: true,
-              features: {
-                external_account_collection: false,
-              }
+              // features: {
+              //   external_account_collection: false,
+              // }
               
             },
-            // payouts: {
-            //   enabled: true,
-            // },
+            
           },
         });
         return Response.json({

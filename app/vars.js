@@ -3,9 +3,13 @@ const vars = {
 
 
 
-id_loreal: '86',
+id_loreal: '99',
 id_deloitte: '11',
 id_smb:'13',
+
+clean_onboarding_individual_xavier: '',
+clean_onboarding_individual_linus: '',
+clean_onboarding_individual_manuel: '',
     
 
 customer_id_loreal: 'cus_PvfNblCZtr1DWK',
@@ -14,8 +18,8 @@ customer_id_smb: 'cus_PvfShe2E6OmeSV',
 customer_id_factoring: 'cus_PvfN0rW5sbT5Rq',
 
 xavier_id_loreal: 'acct_1P5obZQrmkyHV9Vf',
-john_id_deloitte: 'acct_1P5rRVQxtUN1UCkI',
-linus_id_deloitte: 'acct_1P5rNgQuWz7LVQL7',
+john_id_deloitte: 'acct_1P6bggR8aPOPo82f',
+linus_id_deloitte: 'acct_1P6bZIR09Gk2inPw',
 manuel_id_smb: 'acct_1P5rZ8R6J2IlYa6u',
 
 

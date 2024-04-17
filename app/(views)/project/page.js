@@ -417,8 +417,10 @@ export default function ProjectDetails() {
                       <div className="flex justify-between mt-4">
                         <p className="text-sm text-gray-500">Amount:</p>
                         <p className="text-sm text-right text-gray-500">
-                        €4000 EUR
-                        </p>
+            {selectedFreelancer && selectedFreelancer.name === 'John 🇺🇸'
+              ? '€5000 EUR'
+              : '€4000 EUR'}
+          </p>
                       </div>
                     </div>
                   </div>

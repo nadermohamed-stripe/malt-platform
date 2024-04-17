@@ -478,7 +478,7 @@ export default function Invoices() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
                               aria-hidden="true"
                             />
-                            VBAN: IT1234567890123456789012345
+                            VBAN: FR17905191801946111969108709
                           </dd>
                         </dl>
                       </div>

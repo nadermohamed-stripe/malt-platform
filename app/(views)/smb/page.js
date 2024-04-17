@@ -65,8 +65,8 @@ const cards = [
       icon: DocumentChartBarIcon,
       amount: '$3,500',
       deadline: 'August 1, 2023',
-      client: 'Stark Industries',
-      description: 'Optimize the website of Stark Industries for better search engine visibility.',
+      client: 'Manuel 🇫🇷',
+      description: 'Optimize the website of SMB Inc. for better search engine visibility.',
       status: 'Completed',
     },
   ];

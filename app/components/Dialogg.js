@@ -16,14 +16,14 @@ export default function Dialogg({isOpen, setIsOpen}) {
 
   const projects = [
     {
-      name: 'Web Design Project',
-      amount: '$5,000',
-      customer: 'Acme Inc.',
+      name: 'Bulk Wire Transfer Upcoming Payments',
+      amount: '€6,000',
+      customer: 'L\'oreal',
       freelancers: [
-        { name: 'John Doe', amount: '$3,000' },
-        { name: 'Jane Smith', amount: '$2,000' }
+        { name: 'Xavier 🇫🇷', amount: '€5,000' },
+        { name: 'Freelancer 1', amount: '€1,000' }
       ],
-      description: 'Design a modern and responsive website for Acme Inc.',
+      description: 'Bulk Wire Transfer',
       timeline: 'April 1, 2023 - May 15, 2023',
       status: 'In Progress',
     },
@@ -102,7 +102,7 @@ export default function Dialogg({isOpen, setIsOpen}) {
                   ) : isSuccess ? (
                     <div className="flex items-center justify-center h-full">
                       <div className="flex flex-col items-center justify-center space-y-4">
-                        <CheckCircleIcon className="h-24 w-24 text-green-600 checkmark" aria-hidden="true" />
+                        {/* <CheckCircleIcon className="h-24 w-24 text-green-600 checkmark" aria-hidden="true" /> */}
                         <p className="text-xl font-medium">Success</p>
                       </div>
                     </div>
@@ -124,10 +124,10 @@ export default function Dialogg({isOpen, setIsOpen}) {
                               ))}
                             </ul>
                           </div>
-                          <div className="mt-5">
+                          {/* <div className="mt-5">
                             <img src="https://via.placeholder.com/400x200?text=Gantt+Chart+Placeholder" alt="Gantt Chart" className="mx-auto" />
                             <p className="mt-2 text-xs text-gray-400">* This is a placeholder image representing a Gantt chart.</p>
-                          </div>
+                          </div> */}
                         </div>
                       </>
                     )}

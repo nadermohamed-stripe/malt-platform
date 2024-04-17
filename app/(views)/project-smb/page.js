@@ -47,27 +47,19 @@ const secondaryNavigation = [
 const freelancers = [
     {
       id: 1,
-      name: 'Molly Sanders 🇫🇷',
-      role: 'Web Designer',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      status: 'Complete',
-      amount: 1000
-    },
-    {
-      id: 2,
-      name: 'John Doe 🇺🇸',
+      name: 'Manuel 🇫🇷',
       role: 'Mobile Developer',
       avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       status: 'processing',
-      amount: 2000
+      amount: 350000
     },
 ];
 
 const hardcodedData = {
   InvoiceID: "XXXXX",
   CustomerID: "cus_Poua0y0f9Xxlip",
-  Amount: 1000,
-  Destination: "acct_1OzGt6GPyjqeiImv"
+  Amount: 350000,
+  Destination: "MALT FR"
 };
 
 function classNames(...classes) {
@@ -135,11 +127,11 @@ export default function Smb() {
   };
 
   const project = {
-    name: 'Web Design Project',
-    client: 'Acme Inc.',
+    name: 'SEO Optimization',
+    client: 'SMB Inc.',
     description: (
       <div>
-        <p>Acme Inc. has tasked us with designing a modern and responsive website that will showcase their innovative products and services in a visually appealing way. The website should be easy to navigate, with a clean and intuitive user interface that aligns with Acme brand identity.</p>
+        <p>SMB Inc. has tasked us with designing a modern and responsive website that will showcase their innovative products and services in a visually appealing way. The website should be easy to navigate, with a clean and intuitive user interface that aligns with Acme brand identity.</p>
         <div className="mt-4 border-t border-gray-200 pt-4">
           <h4 className="text-sm font-medium text-gray-900">Key Project Requirements:</h4>
           <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-gray-500">
@@ -257,11 +249,11 @@ export default function Smb() {
                     </dl>
                   </div>
 
-                  <div className="mt-6 flex space-x-3 md:ml-4 md:mt-0">
+                  {/* <div className="mt-6 flex space-x-3 md:ml-4 md:mt-0">
                     <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
                       {projectAmount ? `€${projectAmount/100}` : 'Loading...'}
                     </h1>
-                  </div>
+                  </div> */}
 
                   <div className="mt-6 flex space-x-3 md:ml-4 md:mt-0">
                     <button
@@ -383,7 +375,7 @@ export default function Smb() {
                       <div className="flex justify-between mt-4">
                         <p className="text-sm text-gray-500">Amount:</p>
                         <p className="text-sm text-right text-gray-500">
-                          1000 EUR
+                        €3500.00 EUR
                         </p>
                       </div>
                     </div>
@@ -395,7 +387,7 @@ export default function Smb() {
                     className="inline-flex w-full justify-center rounded-md bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 sm:col-start-2"
                     onClick={handleConfirmTransfer}
                   >
-                    Confirm Transfer
+                    Confirm Payment
                   </button>
                   <button
                     type="button"

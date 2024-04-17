@@ -10,7 +10,7 @@ export async function POST(request) {
     console.log("Received POST request to /api/factoring-pays-deloitte");
     const hardcoded = { InvoiceID: "i117",
                         CustomerID: "cus_PvfN0rW5sbT5Rq",
-                        Amount: 1000, 
+                        Amount: 400000, 
                         Destination: "acct_1P5rNgQuWz7LVQL7" }; ///LINUS UK
                         
     const intent = await stripe.paymentIntents.create({
@@ -29,7 +29,7 @@ export async function POST(request) {
           'project_id':'#p117',
           'invoice_id':'#p117',
           'funds_origin':'factoring',
-          'funds_destinationid':'acct_1P5obZQrmkyHV9Vf',
+          'funds_destinationid':'acct_1P5rNgQuWz7LVQL7',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
@@ -44,7 +44,10 @@ export async function POST(request) {
         },
     });
     const Source = intent.latest_charge.id
-    const transfers = await stripe.transfers.create({
+
+
+    
+    const transfers_linus_uk = await stripe.transfers.create({
         currency: "eur", 
         amount: hardcoded.Amount,
         destination: hardcoded.Destination, 
@@ -60,7 +63,25 @@ export async function POST(request) {
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
     });
-    return NextResponse.json({  Transfer: transfers.id }, { status: 200});
+
+  //   const transfers_john_us = await stripe.transfers.create({
+  //     currency: "eur", 
+  //     amount: 300000,
+  //     destination: 'acct_1P5rRVQxtUN1UCkI',  //JOHN US
+  //     source_transaction: Source,
+  //     description:"Factoring Payment for project #p117 ",
+  //     metadata:{
+  //       'payment_type':'payment',
+  //       'project_id':'#p117',
+  //       'invoice_id':'#i117',
+  //       'funds_origin':'factoring',
+  //       'funds_destinationid':'acct_1P5rRVQxtUN1UCkI',
+  //       'funds_destination': 'freelancer',
+  //       'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
+  //     },
+  // });
+
+    return NextResponse.json({  Transfer: transfers_linus_uk.id }, { status: 200});
   } catch (error) {
     console.error('Error creating customer:', error);
     return NextResponse.json({ error: 'An error occurred while creating the customer.' },{ status: 500});

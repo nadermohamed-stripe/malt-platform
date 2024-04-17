@@ -26,7 +26,7 @@ export default function Onboarding() {
     
     const fetchClientSecret = async () => {
       // Fetch the AccountSession client secret
-      const response = await fetch('/api/account-session', { method: "POST" });
+      const response = await fetch('/api/account-session-xavier', { method: "POST" });
       if (!response.ok) {
         // Handle errors on the client side here
         const {error} = await response.json();

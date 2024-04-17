@@ -36,7 +36,7 @@ const navigation = [
 const secondaryNavigation = [
   { name: 'My Business', href: '#', icon: CogIcon },
   { name: 'Resources', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'My settings', href: '#', icon: ShieldCheckIcon },
+  { name: 'My settings', href: '/loreal', icon: ShieldCheckIcon },
 ]
 const cards = [
     {
@@ -94,34 +94,34 @@ const projects = [
     {
       name: 'Web Design Project',
       amount: '$5,000',
-      customer: 'Loreal',
+      customer: 'L\'oreal',
       freelancers: [
-        { name: 'Xavier', amount: '$3,000' },
+        { name: 'Xavier 🇫🇷', amount: '$5,000' },
       ],
-      description: 'Design a modern and responsive website for Acme Inc.',
+      description: 'Design a modern and responsive website for L\'oreal new campaign',
       timeline: 'April 1, 2023 - May 15, 2023',
       status: 'In Progress',
     },
     {
-      name: 'Web Design Project',
+      name: 'Mobile App Development',
       amount: '$5,000',
       customer: 'Deloitte DE',
       freelancers: [
-        { name: 'John', amount: '$3,000' },
-        { name: 'Linus', amount: '$2,000' }
+        { name: 'John 🇺🇸', amount: '$3,000' },
+        { name: 'Linus 🇬🇧', amount: '$2,000' }
       ],
-      description: 'Design a modern and responsive website for Acme Inc.',
+      description: 'Native mobile app development for Deloitte DE',
       timeline: 'April 1, 2023 - May 15, 2023',
       status: 'In Progress',
     },
     {
-      name: 'Web Design Project',
+      name: 'SEO Optimization',
       amount: '$5,000',
       customer: 'SMB Inc.',
       freelancers: [
-        { name: 'Manue', amount: '$3,000' },
+        { name: 'Manuel 🇫🇷', amount: '$3,000' },
       ],
-      description: 'Design a modern and responsive website for Acme Inc.',
+      description: 'SEO optimization for SMB Inc. website',
       timeline: 'April 1, 2023 - May 15, 2023',
       status: 'In Progress',
     },
@@ -607,7 +607,7 @@ export default function Factoring() {
     </div>
   ) : isSuccess ? (
     <div className="flex flex-col items-center justify-center">
-      <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" />
+      {/* <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" /> */}
       <p className="text-lg">Success</p>
     </div>
   ) : (
@@ -628,10 +628,10 @@ export default function Factoring() {
             ))}
           </ul>
         </div>
-        <div className="mt-5">
+        {/* <div className="mt-5">
           <img src="https://via.placeholder.com/400x200?text=Gantt+Chart+Placeholder" alt="Gantt Chart" className="mx-auto" />
           <p className="mt-2 text-xs text-gray-400">* This is a placeholder image representing a Gantt chart.</p>
-        </div>
+        </div> */}
       </div>
     </>
   )}

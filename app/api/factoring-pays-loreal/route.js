@@ -10,8 +10,8 @@ export async function POST(request) {
     console.log("Received POST request to /api/factoring-pays-loreal");
     const hardcoded = { InvoiceID: "XXXXX",
                         CustomerID: "cus_PvfN0rW5sbT5Rq",
-                        Amount: 10000, 
-                        Destination: "acct_1P5obZQrmkyHV9Vf" };
+                        Amount: 500000, 
+                        Destination: "acct_1P5obZQrmkyHV9Vf" };  /// XAVIER
                         
     const intent = await stripe.paymentIntents.create({
         amount: hardcoded.Amount,

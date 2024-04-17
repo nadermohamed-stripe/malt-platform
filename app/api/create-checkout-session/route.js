@@ -8,10 +8,11 @@ export async function POST(req) {
     try {
         console.log("Received POST request to /api/create-checkout-session");
         const session = await stripe.checkout.sessions.create({
+          customer: 'cus_PvfShe2E6OmeSV',
             line_items: [
               {
                 // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                price: 'price_1P5sKZJoM91GmNSBpikZFsVt',
+                price: 'price_1P6BTGJoM91GmNSBtbCduCQB',
                 quantity: 1,
               },
             ],

@@ -10,7 +10,7 @@ export async function POST(request) {
     console.log("Received POST request to /api/deloitte-pays-factoring");
     const hardcoded = { InvoiceID: "XXXXX",
                         CustomerID: "cus_PvjHIMouxuMvhs",
-                        Amount: 1000, 
+                        Amount: 400000, 
                         Destination: "acct_1P5pG7R7oRvG1u9R" };
                         
     const intent = await stripe.paymentIntents.create({
@@ -29,7 +29,7 @@ export async function POST(request) {
           'project_id':'#p97',
           'invoice_id':'#i97',
           'funds_origin':'factoring',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_destinationid':'acct_1P5pG7R7oRvG1u9R',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },
@@ -55,7 +55,7 @@ export async function POST(request) {
           'project_id':'#p117',
           'invoice_id':'#i117',
           'funds_origin':'factoring',
-          'funds_destinationid':'acct_1M4QGc4hVELuSrkU',
+          'funds_destinationid':'acct_1P5pG7R7oRvG1u9R',
           'funds_destination': 'freelancer',
           'incoming_bashbalance_id':'ccsbtxn_1P1mDvGPyjqeiImv3HwzrhBX',
         },

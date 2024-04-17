@@ -34,9 +34,9 @@ const navigation = [
   { name: 'Invoices & Payments', href: '#', icon: UserGroupIcon, current: false },
 ]
 const secondaryNavigation = [
-  { name: 'My Business', href: '#', icon: CogIcon },
+  { name: 'My Business', href: '/factoring-deloitte', icon: CogIcon },
   { name: 'Resources', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'My settings', href: '#', icon: ShieldCheckIcon },
+  { name: 'My settings', href: '/loreal', icon: ShieldCheckIcon },
 ]
 
 const days = [
@@ -59,10 +59,10 @@ const days = [
         id: 2,
         invoiceNumber: '00011',
         href: '#',
-        amount: '$10,000.00 USD',
+        amount: '€1,000 EUR',
         status: 'Upcoming',
-        client: 'Factoring',
-        description: 'Payment Partner',
+        client: 'Freelancer 1',
+        description: 'Logo redesign',
         icon: ArrowDownCircleIcon,
       },
       {
@@ -97,9 +97,9 @@ const days = [
         id: 5,
         invoiceNumber: '00011',
         href: '#',
-        amount: '$10,000.00 USD',
+        amount: '€5,000.00 EUR',
         status: 'Upcoming',
-        client: 'Xavier',
+        client: 'Xavier 🇫🇷',
         description: 'Website redesign',
         icon: ArrowDownCircleIcon,
       },

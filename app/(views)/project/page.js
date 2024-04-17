@@ -47,19 +47,46 @@ const secondaryNavigation = [
 const freelancersData = [
     {
       id: 1,
-      name: 'Molly Sanders 🇫🇷',
+      name: 'Linus 🇬🇧',
       role: 'Web Designer',
+      avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      status: 'processing',
+      amount: 400000
+    },
+
+    {
+      id: 2,
+      name: 'John 🇺🇸',
+      role: 'UX Designer',
+      avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      status: 'processing',
+      amount: 400000
+    },
+
+    {
+      id: 3,
+      name: 'Kevin Joos 🇩🇪',
+      role: 'Software Engineer',
+      avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      status: 'Complete',
+      amount: 1000
+    },
+
+    {
+      id: 4,
+      name: 'Molly Santander 🇪🇸',
+      role: 'Project Manager',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       status: 'Complete',
       amount: 1000
     },
     {
-      id: 2,
-      name: 'John Doe 🇺🇸',
-      role: 'Mobile Developer',
-      avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      status: 'processing',
-      amount: 2000
+      id: 5,
+      name: 'Kristina Kenny 🇬🇷',
+      role: 'Web Designer',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      status: 'Complete',
+      amount: 1000
     },
 ];
 
@@ -135,11 +162,11 @@ export default function ProjectDetails() {
   };
 
   const project = {
-    name: 'Web Design Project',
-    client: 'Acme Inc.',
+    name: 'Mobile App Development',
+    client: 'Deloitte',
     description: (
       <div>
-        <p>Acme Inc. has tasked us with designing a modern and responsive website that will showcase their innovative products and services in a visually appealing way. The website should be easy to navigate, with a clean and intuitive user interface that aligns with Acme brand identity.</p>
+        <p>Deloitte has tasked us with designing a modern and responsive website that will showcase their innovative products and services in a visually appealing way. The website should be easy to navigate, with a clean and intuitive user interface that aligns with Acme brand identity.</p>
         <div className="mt-4 border-t border-gray-200 pt-4">
           <h4 className="text-sm font-medium text-gray-900">Key Project Requirements:</h4>
           <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-gray-500">
@@ -291,37 +318,37 @@ export default function ProjectDetails() {
                   
                   
                   <div className="mt-3 flex flex-col space-y-5">
-      {freelancers.map((freelancer) => (
-        <div key={freelancer.id} className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="flex-shrink-0">
-              <img className="h-10 w-10 rounded-full" src={freelancer.avatar} alt="" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-gray-900">{freelancer.name}</p>
-              <p className="truncate text-sm text-gray-500">{freelancer.role}</p>
-            </div>
-          </div>
-          <p
-            className={classNames(
-              'mt-2 text-sm font-medium',
-              statusStyles[freelancer.status]
-            )}
-          >
-            Status: {freelancer.status}
-          </p>
-          <p className="mt-2 text-sm font-medium text-gray-500">
-            Amount: €{freelancer.amount / 100}
-          </p>
-          <button
-  type="button"
-  className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-  onClick={() => handleTransferClick(freelancer)}
->
-  Transfer
-</button>
+  {freelancers.map((freelancer) => (
+    <div key={freelancer.id} className="flex items-center justify-between">
+      <div className="flex items-center space-x-3">
+        <div className="flex-shrink-0">
+          <img className="h-10 w-10 rounded-full" src={freelancer.avatar} alt="" />
         </div>
-      ))}
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium text-gray-900">{freelancer.name}</p>
+          <p className="truncate text-sm text-gray-500">{freelancer.role}</p>
+        </div>
+      </div>
+      <p
+        className={classNames(
+          'text-sm font-medium',
+          statusStyles[freelancer.status]
+        )}
+      >
+        Status: {freelancer.status}
+      </p>
+      <p className="text-sm font-medium text-gray-500">
+        Amount: €{(freelancer.amount / 100).toFixed(2)}
+      </p>
+      <button
+        type="button"
+        className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        onClick={() => handleTransferClick(freelancer)}
+      >
+        Transfer
+      </button>
+    </div>
+  ))}
 </div>
 
                 
@@ -383,7 +410,7 @@ export default function ProjectDetails() {
                       <div className="flex justify-between mt-4">
                         <p className="text-sm text-gray-500">Amount:</p>
                         <p className="text-sm text-right text-gray-500">
-                          1000 EUR
+                        €4000 EUR
                         </p>
                       </div>
                     </div>

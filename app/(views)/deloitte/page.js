@@ -54,8 +54,8 @@ const cards = [
       icon: ScaleIcon,
       amount: '$8,000',
       deadline: 'June 30, 2023',
-      client: 'Globex Corp.',
-      description: 'Develop a cross-platform mobile app for Globex Corp.',
+      client: 'John 🇬🇧 & Linus 🇬🇧',
+      description: 'Develop a cross-platform mobile app for Deloitte',
       status: 'Pending',
     },
     {
@@ -70,19 +70,39 @@ const cards = [
     },
   ];
   
-const transactions = [
-  {
-    id: 1,
-    name: 'Payment to Molly Sanders',
-    href: '#',
-    amount: '$20,000',
-    currency: 'USD',
-    status: 'success',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  // More transactions...
-]
+  const transactions = [
+    {
+      id: 1,
+      name: 'Payment to Molly Sanders',
+      href: '#',
+      amount: '$20,000',
+      currency: 'EUR',
+      status: 'success',
+      date: 'July 11, 2020',
+      datetime: '2020-07-11',
+    },
+    {
+      id: 2,
+      name: 'Payment to Marcus Andrews',
+      href: '#',
+      amount: '$10,000',
+      currency: 'EUR',
+      status: 'success',
+      date: 'July 11, 2020',
+      datetime: '2020-07-11',
+    },
+    {
+      id: 2,
+      name: 'Payment to Antony Bordain',
+      href: '#',
+      amount: '$5,000',
+      currency: 'EUR',
+      status: 'success',
+      date: 'July 11, 2020',
+      datetime: '2020-07-11',
+    },
+    // More transactions...
+  ]
 const statusStyles = {
   success: 'bg-green-100 text-green-800',
   processing: 'bg-yellow-100 text-yellow-800',

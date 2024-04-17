@@ -13,7 +13,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleCreateAccountClick = () => {
-    router.push('/select-account');
+    router.push('/select-account-smb');
   };
   return (
     <Disclosure as="nav" className="bg-white shadow">

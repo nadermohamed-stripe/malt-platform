@@ -36,7 +36,7 @@ const navigation = [
 const secondaryNavigation = [
   { name: 'My Business', href: '#', icon: CogIcon },
   { name: 'Resources', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'My settings', href: '#', icon: ShieldCheckIcon },
+  { name: 'My settings', href: '/deloitte', icon: ShieldCheckIcon },
 ]
 const cards = [
     {
@@ -91,42 +91,42 @@ const statusStyles = {
 }
 
 const projects = [
-    {
-      name: 'Web Design Project',
-      amount: '$5,000',
-      customer: 'Loreal',
-      freelancers: [
-        { name: 'Xavier', amount: '$3,000' },
-      ],
-      description: 'Design a modern and responsive website for Acme Inc.',
-      timeline: 'April 1, 2023 - May 15, 2023',
-      status: 'In Progress',
-    },
-    {
-      name: 'Web Design Project',
-      amount: '$5,000',
-      customer: 'Deloitte DE',
-      freelancers: [
-        { name: 'John', amount: '$3,000' },
-        { name: 'Linus', amount: '$2,000' }
-      ],
-      description: 'Design a modern and responsive website for Acme Inc.',
-      timeline: 'April 1, 2023 - May 15, 2023',
-      status: 'In Progress',
-    },
-    {
-      name: 'Web Design Project',
-      amount: '$5,000',
-      customer: 'SMB Inc.',
-      freelancers: [
-        { name: 'Manue', amount: '$3,000' },
-      ],
-      description: 'Design a modern and responsive website for Acme Inc.',
-      timeline: 'April 1, 2023 - May 15, 2023',
-      status: 'In Progress',
-    },
-    /* ...other projects... */
-  ]
+  {
+    name: 'Web Design Project',
+    amount: '$5,000',
+    customer: 'L\'oreal',
+    freelancers: [
+      { name: 'Xavier 🇫🇷', amount: '$5,000' },
+    ],
+    description: 'Design a modern and responsive website for L\'oreal new campaign',
+    timeline: 'April 1, 2023 - May 15, 2023',
+    status: 'In Progress',
+  },
+  {
+    name: 'Mobile App Development',
+    amount: '$8,000',
+    customer: 'Deloitte DE',
+    freelancers: [
+      { name: 'John 🇺🇸', amount: '$4,000' },
+      { name: 'Linus 🇬🇧', amount: '$4,000' }
+    ],
+    description: 'Native mobile app development for Deloitte DE',
+    timeline: 'April 1, 2023 - May 15, 2023',
+    status: 'In Progress',
+  },
+  {
+    name: 'SEO Optimization',
+    amount: '$5,000',
+    customer: 'SMB Inc.',
+    freelancers: [
+      { name: 'Manuel 🇫🇷', amount: '$3,000' },
+    ],
+    description: 'SEO optimization for SMB Inc. website',
+    timeline: 'April 1, 2023 - May 15, 2023',
+    status: 'In Progress',
+  },
+  /* ...other projects... */
+]
   
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -607,7 +607,7 @@ export default function Factoring() {
     </div>
   ) : isSuccess ? (
     <div className="flex flex-col items-center justify-center">
-      <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" />
+      {/* <CheckCircleIcon className="h-16 w-16 text-green-600 checkmark" aria-hidden="true" /> */}
       <p className="text-lg">Success</p>
     </div>
   ) : (

@@ -8,31 +8,31 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    console.log("Received POST request to /api/loreal-pays-factoring");
+    console.log("Received POST request to /api/deloitte-pays-factoring-us");
     const hardcoded = { InvoiceID: "XXXXX",
-                        CustomerID: "cus_PvfNblCZtr1DWK",
-                        Amount: 600000, 
+                        CustomerID: "cus_PvjHIMouxuMvhs",
+                        Amount: 500000, 
                         Destination: "acct_1P5pG7R7oRvG1u9R" };
                         
     const intent = await stripe.paymentIntents.create({
-        amount: 600000,
+        amount: 500000,
         currency: "eur", 
         payment_method_types:['customer_balance'],
-        customer: vars.customer_id_loreal,
+        customer: vars.customer_id_deloitte,
         confirm:true,
         payment_method_data:{
           type: "customer_balance",
         },
         expand: ['latest_charge'],
-        description:"Customer Payment for project p" + vars.id_loreal,
+        description:"Factoring Payment for project p" + vars.id_deloitte,
         metadata:{
           'payment_type':'payment',
-          'project_id': 'p' + vars.id_loreal,
-          'invoice_id':'i' + vars.id_loreal,
-          'funds_origin': 'loreal',
+          'project_id': 'p' + vars.id_deloitte,
+          'invoice_id':'i' + vars.id_deloitte,
+          'funds_origin': 'deloitte',
           'funds_destinationid': vars.factoring_account_id,
           'funds_destination': 'factoring',
-          'incoming_bashbalance_id': vars.incoming_bashbalance_id_loreal,
+          'incoming_bashbalance_id': vars.incoming_bashbalance_id_deloitte,
         },
         payment_method_options:{
           customer_balance: {
@@ -44,55 +44,45 @@ export async function POST(request) {
           },
         },
     });
-
-    const pi = intent.id
-    const applybalance = await stripe.paymentIntents.applyCustomerBalance(
-      pi
-    );
-
-    const latest_charge = await stripe.paymentIntents.retrieve(
-      pi
-    );
-  
-    const Source = latest_charge.latest_charge
-
+    const Source = intent.latest_charge.id
     
     const transfers = await stripe.transfers.create({
         currency: "eur", 
-        amount: 600000,
+        amount: 500000,
         destination: vars.factoring_account_id, 
         source_transaction: Source,
-        description:"Factoring Payment for project p" + vars.id_loreal,
+        description:"Factoring Payment for project p" + vars.id_deloitte,
         metadata:{
           'payment_type':'payment',
-          'project_id': 'p' + vars.id_loreal,
-          'invoice_id':'i' + vars.id_loreal,
-          'funds_origin': 'loreal',
+          'project_id': 'p' + vars.id_deloitte,
+          'invoice_id':'i' + vars.id_deloitte,
+          'funds_origin': 'deloitte',
           'funds_destinationid': vars.factoring_account_id,
           'funds_destination': 'factoring',
-          'incoming_bashbalance_id': vars.incoming_bashbalance_id_loreal,
+          'incoming_bashbalance_id': vars.incoming_bashbalance_id_deloitte,
         },
     });
+
 
     const intent2 = await stripe.paymentIntents.create({
       amount: 1000,
       currency: "eur", 
       payment_method_types:['customer_balance'],
-      customer: vars.customer_id_loreal,
+      customer: hardcoded.CustomerID,
       confirm:true,
       payment_method_data:{
         type: "customer_balance",
       },
       expand: ['latest_charge'],
-      description:"Malt Fee for project #p" + vars.id_loreal,
+      description:"Malt Fee for project #p" + vars.id_deloitte,
       metadata:{
         'payment_type':'payment',
-        'project_id': 'p' + vars.id_loreal,
-        'invoice_id':'i' + vars.id_loreal,
-        'funds_origin': 'loreal',
-        'funds_destinationid': vars.funds_destinationid_loreal,
+        'project_id': 'p' + vars.id_deloitte,
+        'invoice_id':'i' + vars.id_deloitte,
+        'funds_origin': 'deloitte',
+        'funds_destinationid': vars.funds_destinationid_deloitte,
         'funds_destination': 'malt',
-        'incoming_bashbalance_id': vars.incoming_bashbalance_id_loreal,
+        'incoming_bashbalance_id': vars.incoming_bashbalance_id_deloitte,
       },
       payment_method_options:{
         customer_balance: {
@@ -105,7 +95,7 @@ export async function POST(request) {
       },
   });
 
-    
+
     return NextResponse.json({  Transfer: transfers.id }, { status: 200});
   } catch (error) {
     console.error('Error creating customer:', error);

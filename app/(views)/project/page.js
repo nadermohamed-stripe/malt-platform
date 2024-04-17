@@ -60,7 +60,7 @@ const freelancersData = [
       role: 'UX Designer',
       avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       status: 'processing',
-      amount: 400000
+      amount: 500000
     },
 
     {
@@ -94,7 +94,8 @@ const hardcodedData = {
   InvoiceID: "XXXXX",
   CustomerID: "cus_Poua0y0f9Xxlip",
   Amount: 1000,
-  Destination: "acct_1OzGt6GPyjqeiImv"
+  Destination: "acct_1OzGt6GPyjqeiImv",
+  country: "us", // Add the country property
 };
 
 function classNames(...classes) {
@@ -135,8 +136,14 @@ export default function ProjectDetails() {
     try {
       console.log('handleConfirmTransfer called');
       console.log('selectedFreelancer:', selectedFreelancer);
-
-      const response = await fetch("/api/deloitte-pays-factoring", {
+  
+      let endpoint = "/api/deloitte-pays-factoring";
+      if (selectedFreelancer.name === 'John 🇺🇸') {
+        endpoint = "/api/deloitte-pays-factoring-us";
+        hardcodedData.country = "us";
+      }
+  
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +153,7 @@ export default function ProjectDetails() {
       const data = await response.json();
       console.log("Transfer successful:", data);
       setOpen(false);
-
+  
       // Update the status of the selected freelancer
       console.log('Updating freelancers array');
       const updatedFreelancers = freelancers.map((freelancer) =>
@@ -442,3 +449,5 @@ export default function ProjectDetails() {
   </>
 );
             }
+
+

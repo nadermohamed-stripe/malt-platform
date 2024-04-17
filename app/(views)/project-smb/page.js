@@ -102,20 +102,9 @@ export default function Smb() {
       });
       const data = await response.json();
   
-      if (data.Transfer) {
-        // Handle successful transfer
-        console.log("Transfer successful");
-        setOpen(false);
-  
-        // Update the status of the selected freelancer
-        setFreelancers((prevFreelancers) =>
-          prevFreelancers.map((freelancer) =>
-            freelancer.id === selectedFreelancer.id
-              ? { ...freelancer, status: 'Complete' }
-              : freelancer
-          )
-        );
-      } else if (data.url) {
+      if (data.url) {
+        // Store the chargeId in localStorage or state
+        localStorage.setItem('chargeId', data.chargeId);
         // Redirect to the URL provided by the API
         window.location.href = data.url;
       } else {
@@ -125,7 +114,6 @@ export default function Smb() {
       console.error("Error transferring funds:", error);
     }
   };
-
   const project = {
     name: 'SEO Optimization',
     client: 'SMB Inc.',
@@ -310,7 +298,7 @@ export default function Smb() {
   className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
   onClick={() => handleTransferClick(freelancer)}
 >
-  Transfer
+  Pre-pay
 </button>
         </div>
       ))}

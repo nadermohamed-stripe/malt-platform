@@ -8,22 +8,28 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     try {
       console.log("Received POST request to /api/account-session-xavier");
         const accountSession = await stripe.accountSessions.create({
-          account: 'acct_1P6CaeQsx6kK6ogq',
+          account: 'acct_1P5obZQrmkyHV9Vf',
           components: {
-            payments: {
-              enabled: true,
-              features: {
-                refund_management: true,
-                dispute_management: true,
-                capture_payments: true,
-              },
-            },
+
+            // payments: {
+
+            //   enabled: true,
+            //   features: {
+            //     refund_management: true,
+            //     dispute_management: true,
+            //     capture_payments: true,
+            //   },
+            // },
             account_onboarding: {
               enabled: true,
+              features: {
+                external_account_collection: false,
+              }
+              
             },
-            payouts: {
-              enabled: true,
-            },
+            // payouts: {
+            //   enabled: true,
+            // },
           },
         });
         return Response.json({

@@ -9,21 +9,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
       console.log("Received POST request to /api/account-session-linus");
         const accountSession = await stripe.accountSessions.create({
           account: 'acct_1P5rNgQuWz7LVQL7',
-          components: {
-            payments: {
-              enabled: true,
-              features: {
-                refund_management: true,
-                dispute_management: true,
-                capture_payments: true,
-              },
+          // components: {
+          //   payments: {
+          //     enabled: true,
+          //     features: {
+          //       refund_management: true,
+          //       dispute_management: true,
+          //       capture_payments: true,
+          //     },
+          //   },
+          account_onboarding: {
+            enabled: true,
+            features: {
+              external_account_collection: false,
             },
-            account_onboarding: {
-              enabled: true,
-            },
-            payouts: {
-              enabled: true,
-            },
+            // payouts: {
+            //   enabled: true,
+            // },
           },
         });
         return Response.json({

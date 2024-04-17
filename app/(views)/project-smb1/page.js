@@ -93,31 +93,28 @@ export default function Smb() {
   };
   const handleConfirmTransfer = async () => {
     try {
-      const response = await fetch("/api/create-checkout-session", {
+      const response = await fetch("/api/transfer-manuel", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(hardcodedData),
       });
+  
       const data = await response.json();
   
-      if (data.Transfer) {
+      if (response.ok) {
         // Handle successful transfer
         console.log("Transfer successful");
         setOpen(false);
   
         // Update the status of the selected freelancer
-        setFreelancers((prevFreelancers) =>
-          prevFreelancers.map((freelancer) =>
-            freelancer.id === selectedFreelancer.id
-              ? { ...freelancer, status: 'Complete' }
-              : freelancer
-          )
-        );
-      } else if (data.url) {
-        // Redirect to the URL provided by the API
-        window.location.href = data.url;
+        // setFreelancers((prevFreelancers) =>
+        //   prevFreelancers.map((freelancer) =>
+        //     freelancer.id === selectedFreelancer.id
+        //       ? { ...freelancer, status: 'Complete' }
+        //       : freelancer
+        //   )
+        // );
       } else {
         console.error("Error transferring funds:", data.error);
       }

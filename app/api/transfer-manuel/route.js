@@ -25,7 +25,7 @@ export async function POST(req) {
       currency: "eur",
       destination: vars.manuel_id_smb,
       source_transaction: latestCharge.id,
-      description: "Factoring Payment for project p" + vars.id_smb,
+      description: "SMB Payment for project p" + vars.id_smb,
       metadata: {
         'payment_type': 'payment',
         'project_id': 'p' + vars.id_smb,
